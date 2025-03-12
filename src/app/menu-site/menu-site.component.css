@@ -1,0 +1,16 @@
+@reference "../../styles.css"; 
+
+.barra-preta {
+  @apply fixed top-0 left-0 w-full bg-black flex justify-center py-2 z-50 h-8;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .barra-preta p {
+    @apply text-sm; /* Menor tamanho de texto em telas pequenas */
+  }
+}
+
+.btn-direita {
+  @apply text-right items-end
+}
