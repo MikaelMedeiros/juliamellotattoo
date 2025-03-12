@@ -4,6 +4,10 @@
   @apply fixed top-0 left-0 w-full bg-black flex justify-center py-2 z-50 h-8;
 }
 
+.logo-bg {
+  @apply bg-[url(public/assi_juliabranco.png)] bg-auto bg-center bg-no-repeat bg-contain;
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
   .barra-preta p {
