@@ -1,5 +1,13 @@
-<div class="card">
-    <p-galleria [value]="images" [autoPlay]="true" [showIndicators]="true" [showThumbnails]="false" [containerStyle]="{ 'max-width': '640px' }">
+<div class="card pl-6 pr-6 pt-4 pb-4">
+    <blockquote class="text-center text-2xl font-semibold text-gray-900 italic dark:text-white">
+        Seu corpo, sua arte, sua identidade    
+    </blockquote>
+
+    <p class="pl-6 pt-2">Cada projeto é desenhado para complementar sua beleza, estilo e refletir quem você é.</p>
+</div>
+
+<div class="card pl-6 pr-6">
+    <p-galleria [value]="images" [autoPlay]="true" [circular]="true" [showIndicators]="true" [showThumbnails]="false" [changeItemOnIndicatorHover]="true" [containerStyle]="{ 'max-width': '640px' }">
         <ng-template #item let-item>
             <img [src]="item.itemImageSrc" style="width: 100%; display: block;" />
         </ng-template>
