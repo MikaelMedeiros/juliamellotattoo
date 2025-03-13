@@ -1,0 +1,5 @@
+@reference "../../styles.css";
+
+.banner-bg {
+    @apply bg-[url(public/banner.png)] bg-auto bg-center bg-no-repeat;
+}

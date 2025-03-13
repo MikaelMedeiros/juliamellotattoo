@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ImageModule } from 'primeng/image';
 import { ButtonModule } from 'primeng/button';
 
@@ -9,5 +9,10 @@ import { ButtonModule } from 'primeng/button';
   styleUrl: './banner-site.component.css'
 })
 export class BannerSiteComponent {
-  
+  @Output() clickScroll = new EventEmitter<void>();
+
+  scrollParaDestino() {
+    this.clickScroll.emit();
+  }
+
 }

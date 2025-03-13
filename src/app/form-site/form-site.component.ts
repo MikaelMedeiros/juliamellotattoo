@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-form-site',
@@ -8,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class FormSiteComponent {
 
+  constructor(private el: ElementRef) {}
+  
+  scrollIntoView() {
+    this.el.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }

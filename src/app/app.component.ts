@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { MenuSiteComponent } from "./menu-site/menu-site.component";
 import { BannerSiteComponent } from "./banner-site/banner-site.component";
@@ -15,5 +15,11 @@ import { TipsSiteComponent } from "./tips-site/tips-site.component";
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'juliamellotattoo';
+  @ViewChild('formSite') formSite!: FormSiteComponent;
+
+  scrollToForm() {
+    if(this.formSite) {
+      this.formSite.scrollIntoView();
+    }
+  }
 }
