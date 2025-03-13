@@ -1,5 +1,13 @@
 @reference "../../styles.css";
 
 .banner-bg {
-    @apply bg-[url(public/banner.png)] bg-auto bg-center bg-no-repeat;
+    @apply bg-[url(public/bannerprincipal.png)] bg-auto bg-center bg-cover;
+}
+
+.align-items-banner {
+    @apply pt-47 grid grid-cols-1 flex justify-items-center;
+}
+
+.banner-text {
+    @apply text-center text-2xl font-semibold italic text-white;
 }

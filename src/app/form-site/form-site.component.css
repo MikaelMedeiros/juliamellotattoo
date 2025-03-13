@@ -1,0 +1,10 @@
+p-inputMask {
+    display: block;
+    width: 100%;
+  }
+
+:host ::ng-deep .p-inputtext {     
+    border: 2px solid;
+    border-radius: 10px; 
+    width: 100%;
+} 

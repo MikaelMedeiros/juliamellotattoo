@@ -5,16 +5,5 @@
 }
 
 .logo-bg {
-  @apply bg-[url(public/assi_juliabranco.png)] bg-auto bg-center bg-no-repeat bg-contain;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-  .barra-preta p {
-    @apply text-sm; /* Menor tamanho de texto em telas pequenas */
-  }
-}
-
-.btn-direita {
-  @apply text-right items-end
+  @apply bg-[url(public/assi_juliabranco.png)] bg-center bg-no-repeat bg-[auto_70px] md:bg-[auto_200px];
 }

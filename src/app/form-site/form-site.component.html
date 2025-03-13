@@ -1,7 +1,50 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <h1>Form Site</h1>
+<div class="max-w-md mx-auto p-4 bg-gray-100 rounded-lg shadow-md">
+  <div *ngFor="let message of messages" class="mb-2">
+    <div *ngIf="message.type === 'question'" class="text-left flex items-center ">
+      <img src="bannerprincipal.png" alt="Pergunta" class="rounded-full w-10 h-10 mr-2" />
+      <div class="bg-black text-white p-2 rounded-lg inline-block">{{ message.text }}</div>
+    </div>
+    <div *ngIf="message.type === 'answer'" class="text-right">
+      <div class="bg-gray-500 text-white p-2 rounded-lg inline-block">{{ message.text }}</div>
     </div>
   </div>
-<p>form-site works!</p>
+  <div *ngIf="currentQuestionIndex < questions.length" >    
+        <input 
+          *ngIf="inputType === 'text'" 
+          #inputField
+          [type]="inputType" 
+          [(ngModel)]="currentAnswer" 
+          pInputText          
+          class="w-full p-2 border rounded"
+          required="true"
+          [attr.maxlength]="questions[currentQuestionIndex].maxLength"
+          (keyup.enter)="nextQuestion()"          
+        />
+        <div class="flex items-stretch">
+          <p-inputMask 
+            *ngIf="inputType === 'tel'" 
+            #inputField
+            [(ngModel)]="currentAnswer" 
+            mask="(99) 99999-9999" 
+            required="true"            
+            (keyup.enter)="nextQuestion()"
+            autofocus="true"
+          ></p-inputMask>
+        </div>
+  </div>
+
+  <div *ngIf="currentQuestionIndex === questions.length" class="mt-4">
+    <div class="text-left flex items-center ">
+      <img src="bannerprincipal.png" alt="Pergunta" class="rounded-full w-10 h-10 mr-2" />
+      <div class="bg-black text-white p-2 rounded-lg inline-block">              
+        <label [innerText]="sendLastMessage()" ></label>
+      </div>
+    </div>
+    <button 
+          class="w-full mt-4 bg-green-500 text-white p-2 rounded-lg" 
+          #confirmButton
+          (click)="sendWppMessage()">
+          Enviar
+        </button>
+  </div>
+</div>
