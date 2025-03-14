@@ -1,6 +1,6 @@
 @reference "../../styles.css"; 
 
-.barra-preta {
+.barra-preta-fixa {
   @apply fixed top-0 left-0 w-full bg-black flex justify-center py-2 z-50 h-8;
 }
 
