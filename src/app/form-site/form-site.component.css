@@ -8,3 +8,7 @@ p-inputMask {
     border-radius: 10px; 
     width: 100%;
 } 
+
+:host ::ng-deep .p-inputnumber {   
+    width: 100%;
+}

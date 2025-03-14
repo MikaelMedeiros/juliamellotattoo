@@ -2,11 +2,11 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputMaskModule } from 'primeng/inputmask';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @Component({
   selector: 'app-form-site',
-  imports: [CommonModule, FormsModule, InputTextModule, InputMaskModule],
+  imports: [CommonModule, FormsModule, InputTextModule, InputNumberModule],
   templateUrl: './form-site.component.html',
   styleUrl: './form-site.component.css'
 })
@@ -16,13 +16,16 @@ export class FormSiteComponent {
   @ViewChild('confirmButton') confirmButton!: ElementRef; 
 
   questions = [
-    { text: 'Qual é o seu nome?', type: 'text', placeholder: 'Digite seu nome...', maxLength: '50' },
-    { text: 'e telefone?', type: 'tel', placeholder: '(XX) XXXXX-XXXX' }
+    { text: 'Qual é o seu nome?', type: 'text', placeholder: 'Digite seu nome...', maxLength: '50' },    
+    { text: 'agora me conte um pouco sobre sua ideia de tatuagem', type: 'text', placeholder: 'Digite sua ideia de tattoo...', maxLength: '100' },
+    { text: 'beleza, com quantos centímetros?', type: 'number', placeholder: 'Digite o tamanho em cm...', maxLength: '2' },
+    { text: 'e essa tattoo seria em qual parte do corpo?', type: 'text', placeholder: 'Digite o local do corpo que será tatuado...', maxLength: '50' }    
   ];
 
-  messages: { text: string, type: 'question' | 'answer' }[] = [];
+  messages: { text: string, type: 'question' | 'answer' | 'loading' }[] = [];
   currentQuestionIndex = 0;
-  currentAnswer = '';
+  currentAnswer:any;
+  isTyping = false;
 
   constructor(private el: ElementRef) {
     this.askNextQuestion();
@@ -34,30 +37,66 @@ export class FormSiteComponent {
   }
 
   get inputType(): string {
-    return this.currentQuestionIndex < this.questions.length && this.questions[this.currentQuestionIndex].type === 'tel' 
-      ? 'tel' 
-      : 'text';
+    if (this.currentQuestionIndex < this.questions.length) {
+      return this.questions[this.currentQuestionIndex].type;
+    }
+    return 'text'
   }
 
   askNextQuestion() {
-    if (this.currentQuestionIndex < this.questions.length) {
-      this.messages.push({ text: this.questions[this.currentQuestionIndex].text, type: 'question' });      
-    }    
+    if (this.currentQuestionIndex < this.questions.length) {      
+      this.messages.push({ text: 'Digitando...', type: 'loading' });
+      this.isTyping = true;
+      const questionText = this.questions[this.currentQuestionIndex].text;
+      const calculatedTimeout = Math.min(Math.max(questionText.length * 25, 1500), 4000);
+
+      setTimeout(() => {        
+        this.messages.pop();
+        this.messages.push({ text: this.questions[this.currentQuestionIndex].text, type: 'question' });       
+        this.isTyping = false;
+        if (this.currentQuestionIndex > 0) {
+          this.setFocusOnInput();
+        }
+      }, calculatedTimeout);    
+    }
   }
 
   nextQuestion() {
-    if (this.currentAnswer.trim() !== '') {
+    if (!this.isTyping && this.verifyEmptyInput()) {
+      this.setCmOnTextAnswer();
       this.messages.push({ text: this.currentAnswer, type: 'answer' });
-      this.currentAnswer = '';
-      this.currentQuestionIndex++;
+      this.currentAnswer = '';      
       
       setTimeout(() => {
+        this.currentQuestionIndex++;
         if (this.currentQuestionIndex < this.questions.length) {
           this.askNextQuestion();
         } else {
           this.setFocusOnConfirmButton();
         }
-      }, 500);
+      }, 100);
+    }
+  }
+
+  private setCmOnTextAnswer(): void {
+    if (this.currentAnswer && this.questions[this.currentQuestionIndex].type === 'number') {
+      this.currentAnswer = `Tattoo de ${this.currentAnswer}cm`;
+    }
+  }
+
+  private verifyEmptyInput(): boolean {
+    return this.currentAnswer !== null && this.currentAnswer !== undefined && this.currentAnswer !== ''
+  }
+
+  checkAutoNext() {
+    if (this.inputType === 'tel' && this.currentAnswer.replace(/\D/g, '').length === 11) {
+      this.nextQuestion();
+    }
+  }
+
+  handleBlur() {    
+    if (this.currentAnswer !== null && this.currentAnswer !== '') {
+      this.nextQuestion();
     }
   }
 
@@ -74,17 +113,14 @@ export class FormSiteComponent {
   }
 
   sendLastMessage(): string {
-    return ` Por último, confira se é isso mesmo e depois pode clicar no botão para enviar pro meu wpp \n
-    ${
-      this.getFormattedResponses()
-    }`; 
+    return ` Por último, confira se é isso mesmo e depois pode clicar no botão para enviar pro meu wpp\n${this.getFormattedResponses()}`; 
   }
 
   getFormattedResponses(): string {
     return this.messages
       .filter(message => message.type === 'answer')
-      .map(message => message.text)
-      .join('\n'); // Junta as respostas, cada uma em uma linha;  
+      .map(message => '• ' + message.text)
+      .join('\t\n');
   }
 
   sendWppMessage() {
@@ -92,8 +128,8 @@ export class FormSiteComponent {
   }
 
   getWhatsAppLink(): string {
-    const phoneNumber = '+5561991885361'; // Substitua pelo seu número com código do país
-    const message = `Oi, Jú. Tudo bem? Eu gostaria de um orçamento, seguem meus dados \n${encodeURIComponent(this.getFormattedResponses())}`;
-    return `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+    const phoneNumber = '+5561991425954';
+    const message = `Oi, Jú. Tudo bem? Eu gostaria de um orçamento, seguem meus dados \n ${this.getFormattedResponses()}`;
+    return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
   }
 }

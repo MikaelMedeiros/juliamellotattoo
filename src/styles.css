@@ -3,7 +3,7 @@
 @import "tailwindcss-primeui";
 
 .text-indent-default {
-    @apply text-center pt-2 pb-16 indent-2;
+    @apply text-center pt-4 indent-2;
 }
 
 .title-text {

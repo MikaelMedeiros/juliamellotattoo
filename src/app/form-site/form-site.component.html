@@ -1,3 +1,9 @@
+<article class="text-balance pb-6">
+  <blockquote class="title-text">
+    Sua pele merece uma arte única e cheia de significado
+  </blockquote>  
+</article>
+
 <div class="max-w-md mx-auto p-4 bg-gray-100 rounded-lg shadow-md">
   <div *ngFor="let message of messages" class="mb-2">
     <div *ngIf="message.type === 'question'" class="text-left flex items-center ">
@@ -7,6 +13,9 @@
     <div *ngIf="message.type === 'answer'" class="text-right">
       <div class="bg-gray-500 text-white p-2 rounded-lg inline-block">{{ message.text }}</div>
     </div>
+    <ng-container *ngIf="message.type === 'loading'">
+      <div class="text-gray-500 italic">Digitando...</div>
+    </ng-container>
   </div>
   <div *ngIf="currentQuestionIndex < questions.length" >    
         <input 
@@ -17,20 +26,19 @@
           pInputText          
           class="w-full p-2 border rounded"
           required="true"
-          [attr.maxlength]="questions[currentQuestionIndex].maxLength"
-          (keyup.enter)="nextQuestion()"          
-        />
-        <div class="flex items-stretch">
-          <p-inputMask 
-            *ngIf="inputType === 'tel'" 
-            #inputField
-            [(ngModel)]="currentAnswer" 
-            mask="(99) 99999-9999" 
-            required="true"            
-            (keyup.enter)="nextQuestion()"
-            autofocus="true"
-          ></p-inputMask>
-        </div>
+          [attr.maxlength]="questions[currentQuestionIndex].maxLength"                  
+          (keydown.enter)="nextQuestion()"      
+          (blur)="handleBlur()"
+        />             
+
+        <p-inputnumber 
+          autofocus="true" 
+          *ngIf="inputType === 'number'"  
+          [(ngModel)]="currentAnswer" 
+          (keydown.enter)="nextQuestion()" 
+          (onBlur)="handleBlur()"
+          inputId="cm"                   
+          />
   </div>
 
   <div *ngIf="currentQuestionIndex === questions.length" class="mt-4">
@@ -44,7 +52,7 @@
           class="w-full mt-4 bg-green-500 text-white p-2 rounded-lg" 
           #confirmButton
           (click)="sendWppMessage()">
-          Enviar
+          Enviar por WhatsApp
         </button>
   </div>
 </div>
