@@ -7,6 +7,12 @@ export class PhotoService {
   getData() {
     return [
         {
+            itemImageSrc: 'assets/ft01.png',
+            thumbnailImageSrc: 'assets/ft01.png',
+            alt: 'Description for Image 1',
+            title: 'Title 1'
+        },
+        {
             itemImageSrc: 'assets/fo01.png',
             thumbnailImageSrc: 'assets/fo01.png',
             alt: 'Description for Image 1',

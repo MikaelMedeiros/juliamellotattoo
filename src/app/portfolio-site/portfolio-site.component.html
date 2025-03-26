@@ -6,11 +6,12 @@
 
     <p class="text-indent-default">Cada projeto é desenhado para complementar sua beleza, estilo e refletir quem você é.</p>
     
-    <div class="card pt-16">
-        <p-galleria [value]="images" [autoPlay]="true" [circular]="true" [showIndicators]="true" [showThumbnails]="false" [changeItemOnIndicatorHover]="true" [showItemNavigators]="true" [containerStyle]="{ 'max-width': '640px' }">
-            <ng-template #item let-item>
-                <img [src]="item.itemImageSrc" style="width: 100%; display: block;" />
-            </ng-template>
-        </p-galleria>
-    </div>
 </article>
+
+<div class="card flex items-center justify-center pt-16">
+    <p-galleria [value]="images" [autoPlay]="true" [circular]="true" [showIndicators]="true" [showThumbnails]="false" [changeItemOnIndicatorHover]="true" [showItemNavigators]="true" [containerStyle]="{ 'max-width': '640px' }">
+        <ng-template #item let-item>
+            <img [src]="item.itemImageSrc" style="width: 100%;" />
+        </ng-template>
+    </p-galleria>
+</div>

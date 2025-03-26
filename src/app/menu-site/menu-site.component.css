@@ -1,9 +1,11 @@
 @reference "../../styles.css"; 
 
 .barra-preta-fixa {
-  @apply fixed top-0 left-0 w-full bg-black flex justify-center py-2 z-50 h-8;
+  @apply top-0 left-0 w-full bg-black flex justify-center h-32;
 }
 
 .logo-bg {
-  @apply bg-[url(public/assi_juliabranco.png)] bg-center bg-no-repeat bg-[auto_70px] md:bg-[auto_200px];
+  @apply bg-[url(public/Logotipoassinatura002.png)] bg-center bg-no-repeat;
+  background-size: auto 60%;
+  height: 100px;
 }
