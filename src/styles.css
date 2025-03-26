@@ -2,12 +2,28 @@
 @import "tailwindcss";
 @import "tailwindcss-primeui";
 
+@font-face {
+    font-family: 'arsenica';
+    src: url('/assets/fonts/ArsenicaTrial-Medium.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'poppins';
+    src: url('/assets/fonts/Poppins-ExtraLight.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 .text-indent-default {
-    @apply text-center pt-4 indent-2;
+    @apply font-[poppins] text-center pt-4 indent-2 text-[#6b7280] dark:text-[#d1d5db];
 }
 
 .title-text {
-    @apply pt-40 text-center text-2xl font-semibold text-gray-900 italic dark:text-white;
+    @apply font-[arsenica] pt-40 text-center text-2xl text-gray-900 dark:text-white;
 }
 
 .highlight-text {
