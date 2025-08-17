@@ -1,0 +1,38 @@
+/* Ajuste para telas pequenas */
+@media (max-width: 767px) {
+    .custom-carousel .p-carousel-item {
+        flex: 0 0 100%; /* Exibe um item por vez */
+        max-width: 100%;
+    }
+
+    .custom-carousel .p-carousel-content {
+        justify-content: center;
+    }
+
+    .custom-carousel .p-carousel-indicators {
+        justify-content: center;
+    }
+}
+
+/* Ajuste geral para melhorar espaçamento */
+.custom-carousel .p-carousel-item {
+    padding: 10px;
+}
+
+.painting-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+/* Estiliza a tag para que fique sobreposta à imagem */
+.tag-overlay {
+    position: absolute;
+    top: 10px; /* Ajuste conforme necessário */
+    left: 10px; /* Ajuste conforme necessário */
+    z-index: 10; /* Garante que a tag fique acima da imagem */
+    background-color: rgba(80, 75, 75, 0.8); /* Fundo semitransparente */
+    border-radius: 5px; /* Bordas arredondadas */
+    padding: 5px 10px; /* Espaçamento interno */
+    font-size: 0.9rem; /* Tamanho da fonte */
+}

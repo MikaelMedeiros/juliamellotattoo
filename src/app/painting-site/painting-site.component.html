@@ -1,0 +1,38 @@
+<article class="text-balance justify-items-center">
+    
+    <blockquote class="title-text">
+        Galeria de Arte   
+    </blockquote>
+
+    <p class="text-indent-default">Acrílico sobre tela com foco nas belezas naturais, explorando contraste, textura e profundidade.</p>
+    
+</article>
+
+<div class="card flex items-center justify-center pt-16">
+    <p-carousel 
+        [value]="paintings" 
+        [numVisible]="3" 
+        [numScroll]="3" 
+        [circular]="false" 
+        [responsiveOptions]="responsiveOptions" 
+        styleClass="custom-carousel"
+        [style]="{ 'max-width': '500px' }">
+        <ng-template let-painting #item>
+            <div class="border border-surface rounded-border m-2 p-4">
+                <div class="mb-4">
+                    <div class="relative mx-auto">
+                        <img [src]="painting.image" [alt]="painting.name" class="painting-image w-full rounded-border" />
+                        <p-tag [value]="painting.inventoryStatus" [severity]="getSeverity(painting.inventoryStatus)" class="tag-overlay"  [style]="{ 'left.px': 5, 'top.px': 5 }" />
+                    </div>
+                </div>
+                <div class="mb-4 font-medium text-center">{{ painting.name }}</div>
+                <div class="flex justify-between items-center">
+                    <div class="mt-0 font-semibold text-xl">{{ 'R$ ' + painting.price}}</div>
+                    <span>                        
+                        <p-button icon="pi pi-shopping-cart" (onClick)="buyPainting(painting)" styleClass="ml-2" />
+                    </span>
+                </div>
+            </div>
+        </ng-template>
+    </p-carousel>
+</div>

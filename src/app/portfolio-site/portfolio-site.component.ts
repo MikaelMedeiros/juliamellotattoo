@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GalleriaModule } from 'primeng/galleria';
 import { PhotoService } from './shared/photo.service';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-portfolio-site',
