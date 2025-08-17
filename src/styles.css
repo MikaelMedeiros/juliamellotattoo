@@ -23,7 +23,7 @@
 }
 
 .title-text {
-    @apply font-[arsenica] pt-40 text-center text-2xl text-gray-900 dark:text-white;
+    @apply pt-40 text-center text-2xl font-semibold italic text-gray-900 dark:text-white;    
 }
 
 .highlight-text {

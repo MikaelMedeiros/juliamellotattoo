@@ -8,5 +8,5 @@ export interface Painting {
     category: string;
     quantity: number;
     inventoryStatus: string;
-    rating: number;
+    size: string;
 }

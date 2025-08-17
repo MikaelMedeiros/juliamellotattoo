@@ -10,13 +10,14 @@
 
 <div class="card flex items-center justify-center pt-16">
     <p-carousel 
+        [styleClass]="'max-w-100 lg:max-w-270'"
         [value]="paintings" 
         [numVisible]="3" 
         [numScroll]="3" 
-        [circular]="false" 
-        [responsiveOptions]="responsiveOptions" 
-        styleClass="custom-carousel"
-        [style]="{ 'max-width': '500px' }">
+        [circular]="true" 
+        [responsiveOptions]="responsiveOptions"                      
+        [showNavigators]="false"
+        >
         <ng-template let-painting #item>
             <div class="border border-surface rounded-border m-2 p-4">
                 <div class="mb-4">
@@ -28,6 +29,7 @@
                 <div class="mb-4 font-medium text-center">{{ painting.name }}</div>
                 <div class="flex justify-between items-center">
                     <div class="mt-0 font-semibold text-xl">{{ 'R$ ' + painting.price}}</div>
+                    <div class="mt-0 font-semibold text-xl">{{ painting.size + 'cm'}}</div>
                     <span>                        
                         <p-button icon="pi pi-shopping-cart" (onClick)="buyPainting(painting)" styleClass="ml-2" />
                     </span>

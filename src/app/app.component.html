@@ -1,6 +1,6 @@
 <app-menu-site></app-menu-site>
 
-<app-banner-site (clickScroll)="scrollToForm()" ></app-banner-site>
+<app-banner-site (clickScroll)="scrollToForm($event)" ></app-banner-site>
 
 <div class="ml-16 mr-16 mb-40" >
     <app-portfolio-site></app-portfolio-site>
@@ -9,7 +9,7 @@
     
     <app-form-site #formSite></app-form-site>
 
-    <app-painting-site></app-painting-site>
+    <app-painting-site #paintings></app-painting-site>
     
     <app-tips-site></app-tips-site>
 </div>

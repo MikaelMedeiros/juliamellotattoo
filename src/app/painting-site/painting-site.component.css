@@ -1,8 +1,8 @@
 /* Ajuste para telas pequenas */
-@media (max-width: 767px) {
+@media (max-width: 450px) {
     .custom-carousel .p-carousel-item {
         flex: 0 0 100%; /* Exibe um item por vez */
-        max-width: 100%;
+        max-width: 400px;        
     }
 
     .custom-carousel .p-carousel-content {
@@ -11,6 +11,11 @@
 
     .custom-carousel .p-carousel-indicators {
         justify-content: center;
+    }
+
+    .p-carousel-next-button,
+    .p-carousel-prev-button {
+        display: none !important;
     }
 }
 

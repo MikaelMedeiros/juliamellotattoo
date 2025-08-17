@@ -17,11 +17,11 @@ export class PaintingService {
               name: 'Energia',
               description: 'A beautiful painting by Júlia Mello.',
               image: 'assets/paintings/energia.png',
-              price: 200,
+              price: 45,
               category: 'Impressionism',
               quantity: 10,
               inventoryStatus: 'INSTOCK',
-              rating: 5
+              size: '15x10'
           },
           {
               id: '1001',
@@ -29,11 +29,11 @@ export class PaintingService {
               name: 'Entardecer',
               description: 'A masterpiece by Júlia Mello.',
               image: 'assets/paintings/entardecer.png',
-              price: 100,
+              price: 27,
               category: 'Impressionism',
               quantity: 5,
-              inventoryStatus: 'OUTOFSTOCK',
-              rating: 4
+              inventoryStatus: 'INSTOCK',
+              size: '5x10'
           },
           {
               id: '1002',
@@ -41,11 +41,11 @@ export class PaintingService {
               name: 'Nuvens de pensamento',
               description: 'An iconic painting by Júlia Mello.',
               image: 'assets/paintings/nuvensdepensamento.png',
-              price: 150,
+              price: 45,
               category: 'Impressionism',
               quantity: 0,
-              inventoryStatus: 'OUTOFSTOCK',
-              rating: 3
+              inventoryStatus: 'INSTOCK',
+              size: '15x10'
           },
           {
             id: '1003',
@@ -53,11 +53,11 @@ export class PaintingService {
             name: 'Textura e mar',
             description: 'A beautiful painting by Júlia Mello.',
             image: 'assets/paintings/txturaemmar.png',
-            price: 120,
+            price: 57,
             category: 'Impressionism',
             quantity: 8,
             inventoryStatus: 'INSTOCK',
-            rating: 5
+            size: '15x15'
           },
           {
             id: '1004',
@@ -65,11 +65,11 @@ export class PaintingService {
             name: 'Por do sol no mar',
             description: 'A beautiful painting by Júlia Mello.',
             image: 'assets/paintings/pordosolnomar.png',
-            price: 100,
+            price: 27,
             category: 'Impressionism',
             quantity: 8,
             inventoryStatus: 'INSTOCK',
-            rating: 5
+            size: '5x10'
           }
       ];
 

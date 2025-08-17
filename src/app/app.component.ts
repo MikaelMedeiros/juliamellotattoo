@@ -17,10 +17,23 @@ import { PaintingSiteComponent } from "./painting-site/painting-site.component";
 })
 export class AppComponent {
   @ViewChild('formSite') formSite!: FormSiteComponent;
+  @ViewChild('paintings') paintings!: PaintingSiteComponent;
 
-  scrollToForm() {
-    if(this.formSite) {
-      this.formSite.scrollIntoView();
+  scrollToForm(section: string) {    
+    switch (section) {
+      case 'formSite':
+        if (this.formSite) {
+          this.formSite.scrollIntoView();
+        }
+        break;
+      case 'paintings':
+        if (this.paintings) {
+          this.paintings.scrollIntoView();
+        }
+        break;
+      default:
+        console.warn(`Seção "${section}" não encontrada.`);
+        break;
     }
   }
 }

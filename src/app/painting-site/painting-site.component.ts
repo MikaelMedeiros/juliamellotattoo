@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { PaintingService } from './service/painting.service';
 import { Painting } from './model/Painting';
 import { CarouselModule } from 'primeng/carousel';
@@ -16,7 +16,10 @@ export class PaintingSiteComponent implements OnInit {
 
   responsiveOptions: any[] | undefined;
 
-  constructor(private paintingService: PaintingService) {}
+  constructor(
+    private paintingService: PaintingService,
+    private el: ElementRef
+  ) {}   
 
   ngOnInit() {
       this.paintingService.getPaintingSmall().then(data => {
@@ -40,6 +43,10 @@ export class PaintingSiteComponent implements OnInit {
             numScroll: 1
         }
     ];
+  }
+
+  scrollIntoView() {
+    this.el.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });    
   }
 
   getSeverity(status: string) {
