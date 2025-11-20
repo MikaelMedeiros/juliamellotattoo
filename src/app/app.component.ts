@@ -11,7 +11,7 @@ import { PaintingSiteComponent } from "./painting-site/painting-site.component";
 
 @Component({
   selector: 'app-root',
-  imports: [ButtonModule, MenuSiteComponent, BannerSiteComponent, BioSiteComponent, PortfolioSiteComponent, FooterSiteComponent, FormSiteComponent, TipsSiteComponent, PaintingSiteComponent],
+  imports: [ButtonModule, MenuSiteComponent, BannerSiteComponent, BioSiteComponent, PortfolioSiteComponent, FooterSiteComponent, FormSiteComponent, TipsSiteComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

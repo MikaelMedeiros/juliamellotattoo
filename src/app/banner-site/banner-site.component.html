@@ -1,5 +1,5 @@
 <div class="carousel-container">
-    <div class="carousel" [style.transform]="'translateX(' + currentSlide * -100 + '%)'">
+    <div class="carousel">
         <!-- Slide 1 -->
         <div class="banner-bg align-items-banner">
             <div>
@@ -9,15 +9,5 @@
                 <p-button [raised]="true" label="Quero um orçamento" severity="contrast" (onClick)="scrollToSection('formSite')" />
             </div>
         </div>
-        <!-- Slide 2 -->
-        <div class="banner-bg-paintings align-items-banner">
-            <div>
-                <h1 class="banner-text">Conheça minha galeria de quadros e leve pinturas exclusivas para o seu espaço.</h1>
-            </div>
-            <div class="pb-8 pt-10">
-                <p-button [raised]="true" label="Conhecer obras" severity="contrast" (onClick)="scrollToSection('paintings')" />
-            </div>
-        </div>
-        <!-- Adicione mais slides conforme necessário -->
     </div>
 </div>
