@@ -1,59 +1,41 @@
-# Juliamellotattoo
+# juliamellotattoo
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.4.
+## Estrutura do projeto
 
-## Development server
+O projeto é um site/portfolio em Angular. A organização foi pensada para facilitar a manutenção e a divisão por responsabilidades:
 
-To start a local development server, run:
+- **Componente orquestrador**: o arquivo `app.component.html` funciona como o componente geral que agrupa todos os demais componentes (cada parte do site é um componente). Ele define a sequência de exibição no site.
+- **Componentes por pasta**: cada pasta dentro de `src/app/` representa uma parte do site (por exemplo: `banner-site`, `painting-site`, `portfolio-site`, `form-site`, `menu-site`, `footer-site`, `bio-site`, `tips-site`). Isso permite trabalhar e manter cada parte de forma isolada.
+- **Observação sobre ordem**: a IDE costuma listar pastas em ordem alfabética. Por isso a ordem visual no explorador de arquivos pode não refletir a sequência do site — para ver a ordem real, confira o `app.component.html` que contém a composição final das seções.
 
-```bash
-ng serve
-```
+Essa separação facilita alterar, testar ou substituir uma seção (componente) sem afetar o restante da aplicação.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Fluxo de desenvolvimento e deploy
 
-## Code scaffolding
+O fluxo adotado neste projeto contempla três ambientes/estados principais: desenvolvimento local (validação rápida), homologação/stage (validação real com o cliente) e produção (main). Abaixo estão os scripts disponíveis e como são usados no fluxo.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### 1) Ambiente local (desenvolvimento rápido e validação em dispositivos)
 
-```bash
-ng generate component component-name
-```
+- **Script recomendado:** `npm run public`
+	- Executa: `ng serve --host=0.0.0.0 --port=4201`.
+	- Por que usar: roda o servidor de desenvolvimento escutando em todas as interfaces (`0.0.0.0`), o que permite acessar o site a partir de outros dispositivos na mesma rede (por exemplo, celular). Isso facilita validar visualmente como o site está exibido em telas reais.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### 2) Ambiente de homologação / stage (validação com o cliente)
 
-```bash
-ng generate --help
-```
+- **Processo:**
+	1. Gerar build de produção: `npm run pbuild` (executa `ng build --configuration production --base-href='./'`). Isso cria os arquivos otimizados em `dist/`.
+	2. Publicar o conteúdo gerado no repositório/GitHub Pages: `npm run deploy` (utiliza `angular-cli-ghpages --dir=dist/juliamellotattoo/browser`). O site de homologação deste repositório está disponível em: `https://mikaelmedeiros.github.io/juliamellotattoo/`.
+	3. Validar com o cliente/dono do site se tudo aparece corretamente no ambiente público (homologação).
 
-## Building
+### 3) Produção (main)
 
-To build the project run:
+- **Fluxo final:** somente depois de validar localmente (passo 1) e na homologação/preview (passo 2) é seguro commitar e mesclar para a branch `main`.
+- **Atenção:** não faça commit direto para `main` sem antes validar com o DONO do SITE. Alterações não testadas em `main` podem afetar diretamente a exibição do site e consequentemente as vendas e o funcionamento do negócio.
 
-```bash
-ng build
-```
+### Scripts úteis (resumo)
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+- `npm start` — `ng serve` (desenvolvimento padrão, `localhost:4200`).
+- `npm run public` — `ng serve --host=0.0.0.0 --port=4201` (útil para testar em dispositivos na mesma rede).
+- `npm run pbuild` — `ng build --configuration production --base-href='./'` (gera build de produção em `dist/`).
+- `npm run deploy` — `angular-cli-ghpages --dir=dist/juliamellotattoo/browser` (publica o conteúdo do build no GitHub Pages; requer o build gerado previamente).
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

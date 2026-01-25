@@ -1,1 +1,5 @@
 @reference "../../styles.css";
+
+.organic-shape {
+  border-radius: 9999px;
+}
