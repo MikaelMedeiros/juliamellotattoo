@@ -1,0 +1,80 @@
+<section>
+  <div class="social-proof-component">
+
+    <!-- Header -->
+    <div>
+      <h2 class="title-text">
+        {{ title }}
+      </h2>
+      <p class="text-indent-default">
+        {{ subtitle }}
+      </p>
+    </div>
+
+    @if (images$ | async; as images) {
+
+      <!-- Controls -->
+      <div class="controls">
+        <button
+          (click)="scrollLeft()"
+          class="text-indent-default"
+        >
+          ←
+        </button>
+        <button
+          (click)="scrollRight()"
+          class="text-indent-default"
+        >
+          →
+        </button>
+      </div>
+
+      <!-- Carousel -->
+      <div
+        #carousel
+        class="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4"
+      >
+        @for (image of images; track image.src) {
+          <button
+            (click)="openImage(image)"
+            class="min-w-[260px] max-w-[260px] snap-center flex-shrink-0
+                   overflow-hidden rounded-xl bg-white shadow-sm
+                   hover:shadow-lg transition"
+          >
+            <img
+              [src]="image.src"
+              [alt]="image.alt || 'Social proof image'"
+              class="w-full h-60 object-cover object-left hover:scale-105 transition-transform"
+              loading="lazy"
+            />
+          </button>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- Modal -->
+  @if (selectedImage; as image) {
+    <div
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/70"
+      (click)="closeImage()"
+    >
+      <div
+        class="max-w-3xl w-full px-4"
+        (click)="$event.stopPropagation()"
+      >
+        <img
+          [src]="image.src"
+          [alt]="image.alt || 'Social proof image'"
+          class="w-full rounded-xl shadow-2xl"
+        />
+        <button
+          class="text-indent-variant mt-4 mx-auto block text-sm underline"
+          (click)="closeImage()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  }
+</section>

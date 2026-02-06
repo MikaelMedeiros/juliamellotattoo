@@ -1,0 +1,9 @@
+@reference "../../styles.css"; 
+
+.social-proof-component {
+    @apply max-w-6xl mx-auto px-4
+}
+
+.controls {
+    @apply flex justify-end gap-2 mb-4;
+}

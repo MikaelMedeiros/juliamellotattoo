@@ -7,7 +7,7 @@
 <div class="max-w-md mx-auto p-4 bg-gray-100 rounded-lg shadow-md">
   <div *ngFor="let message of messages" class="mb-2">
     <div *ngIf="message.type === 'question'" class="text-left flex items-center ">
-      <img src="avatar-chat.jpeg" alt="Pergunta" class="rounded-full w-10 h-10 mr-2" />
+      <img src="sobreatatuadora.png" alt="Pergunta" class="rounded-full w-10 h-10 mr-2" />
       <div class="bg-black text-white p-2 rounded-lg inline-block">{{ message.text }}</div>
     </div>
     <div *ngIf="message.type === 'answer'" class="text-right">
@@ -43,7 +43,7 @@
 
   <div *ngIf="currentQuestionIndex === questions.length" class="mt-4">
     <div class="text-left flex items-center ">
-      <img src="avatar-chat.jpeg" alt="Pergunta" class="rounded-full w-10 h-10 mr-2" />
+      <img src="sobreatatuadora.png" alt="Pergunta" class="rounded-full w-10 h-10 mr-2" />
       <div class="bg-black text-white p-2 rounded-lg inline-block">              
         <label [innerText]="sendLastMessage()" ></label>
       </div>

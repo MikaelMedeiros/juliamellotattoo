@@ -8,10 +8,11 @@ import { FooterSiteComponent } from "./footer-site/footer-site.component";
 import { FormSiteComponent } from "./form-site/form-site.component";
 import { TipsSiteComponent } from "./tips-site/tips-site.component";
 import { PaintingSiteComponent } from "./painting-site/painting-site.component";
+import { SocialProofComponent } from "./social-proof/social-proof.component";
 
 @Component({
   selector: 'app-root',
-  imports: [ButtonModule, MenuSiteComponent, BannerSiteComponent, BioSiteComponent, PortfolioSiteComponent, FooterSiteComponent, FormSiteComponent, TipsSiteComponent],
+  imports: [ButtonModule, MenuSiteComponent, BannerSiteComponent, BioSiteComponent, PortfolioSiteComponent, FooterSiteComponent, FormSiteComponent, TipsSiteComponent, SocialProofComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
