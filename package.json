@@ -9,7 +9,7 @@
     "test": "ng test",
     "pbuild": "ng build --configuration production --base-href='./'",
     "deploy": "angular-cli-ghpages --dir=dist/juliamellotattoo/browser",
-    "public": "ng serve --host=0.0.0.0 --port=4201" 
+    "public": "ng serve --host=0.0.0.0 --port=4201 --disable-host-check" 
   },
   "private": true,
   "dependencies": {
