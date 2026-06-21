@@ -1,40 +1,26 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
+import { RouterOutlet, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { MenuSiteComponent } from "./menu-site/menu-site.component";
 import { BannerSiteComponent } from "./banner-site/banner-site.component";
-import { BioSiteComponent } from "./bio-site/bio-site.component";
-import { PortfolioSiteComponent } from "./portfolio-site/portfolio-site.component";
 import { FooterSiteComponent } from "./footer-site/footer-site.component";
-import { FormSiteComponent } from "./form-site/form-site.component";
-import { TipsSiteComponent } from "./tips-site/tips-site.component";
-import { PaintingSiteComponent } from "./painting-site/painting-site.component";
-import { SocialProofComponent } from "./social-proof/social-proof.component";
 
 @Component({
   selector: 'app-root',
-  imports: [ButtonModule, MenuSiteComponent, BannerSiteComponent, BioSiteComponent, PortfolioSiteComponent, FooterSiteComponent, FormSiteComponent, TipsSiteComponent, SocialProofComponent],
+  imports: [RouterOutlet, ButtonModule, MenuSiteComponent, BannerSiteComponent, FooterSiteComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  @ViewChild('formSite') formSite!: FormSiteComponent;
-  @ViewChild('paintings') paintings!: PaintingSiteComponent;
 
-  scrollToForm(section: string) {    
-    switch (section) {
-      case 'formSite':
-        if (this.formSite) {
-          this.formSite.scrollIntoView();
-        }
-        break;
-      case 'paintings':
-        if (this.paintings) {
-          this.paintings.scrollIntoView();
-        }
-        break;
-      default:
-        console.warn(`Seção "${section}" não encontrada.`);
-        break;
+  constructor(private router: Router) {}
+
+  scrollToForm(section: string) {
+  this.router.navigate(
+    ['/'],
+    {
+      fragment: section
     }
-  }
+  );
+}
 }

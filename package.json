@@ -3,13 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "pbuild": "ng build --configuration production --base-href='./'",
     "deploy": "angular-cli-ghpages --dir=dist/juliamellotattoo/browser",
-    "public": "ng serve --host=0.0.0.0 --port=4201 --disable-host-check" 
+    "public": "ng serve --host=0.0.0.0 --port=4300 --disable-host-check --proxy-config proxy.conf.json"
   },
   "private": true,
   "dependencies": {
@@ -23,6 +23,7 @@
     "@angular/router": "^19.1.0",
     "@primeng/themes": "^19.0.9",
     "@tailwindcss/postcss": "^4.0.13",
+    "angularx-qrcode": "^19.0.0",
     "postcss": "^8.5.3",
     "primeicons": "^7.0.0",
     "primeng": "^19.0.9",

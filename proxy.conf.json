@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "https://gift-card.mikaelnascimentomedeiros.workers.dev",
+    "secure": true,
+    "changeOrigin": true
+  }
+}

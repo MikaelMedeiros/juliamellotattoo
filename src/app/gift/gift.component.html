@@ -1,0 +1,143 @@
+
+<article class="text-balance justify-items-center">
+    
+    <blockquote class="title-text">
+        Painel Gift Card    
+    </blockquote>
+
+    <p class="text-indent-default">Gerencie os gift cards para suas clientes</p>
+    
+</article>
+
+@if (logged) {
+    <div class="flex justify-content-end pt-3 pr-3 pb-3">
+        <p-button
+            severity="secondary"
+            icon="pi pi-sign-out"
+            (onClick)="logout()">
+        </p-button>
+    </div>
+    <div class="align-cards">
+        <p-card [style]="{ width: '20rem', overflow: 'hidden' }">
+            <ng-template #title> 
+                <i class="pi pi-gift" style="font-size: 1.5rem"></i>
+                 Gerar Gift 
+            </ng-template>
+            <ng-template #subtitle> Crie um novo gift card para suas clientes </ng-template>
+    
+            <ng-template #footer >
+                <p-button severity="success" icon="pi pi-plus" 
+                [loading]="generating"
+                label="Gerar novo gift" class="w-full" styleClass="w-full" 
+                (onClick)="generateGift()"
+                />                
+    
+                @if (qrVisible) {
+                <div class="flex flex-col items-center gap-4">
+        
+                    <qrcode
+                    [qrdata]="qrValue"
+                    [width]="250"
+                    [errorCorrectionLevel]="'M'">
+                    </qrcode>
+                </div>
+                    <p class="text-center">
+                    Escaneie o QR Code para resgatar o gift.
+                    </p>
+        
+                    <input
+                    pInputText
+                    [value]="qrValue"
+                    readonly
+                    class="w-full" />
+    
+                    <p-button                
+                    icon="pi pi-copy"
+                    label="Copiar Link"
+                    severity="success"
+                    styleClass="w-full" 
+                    (onClick)="copyLink()">
+                    </p-button>
+        
+                
+            }
+            </ng-template>
+    
+            
+        </p-card>   
+    
+        <p-card [style]="{ width: '20rem', overflow: 'hidden' }">
+            <ng-template #title>
+                <i class="pi pi-shield" style="font-size: 1.5rem"></i> 
+                Validar uso do Gift 
+            </ng-template>
+            <ng-template #subtitle> Valide o código de um gift card e finalize o uso</ng-template>
+            
+            <ng-template #footer>
+                <p-button severity="help" icon="pi pi-qrcode" 
+                label="Validar código" class="w-full" styleClass="w-full" 
+                (onClick)="showValidateDialog()"
+                />
+            </ng-template>
+        </p-card>   
+    
+        <p-dialog
+            header="Validar Gift"
+            [(visible)]="validateDialog"
+            [modal]="true"
+            [style]="{ width: '90vw', maxWidth: '500px' }">
+    
+            <div class="gift-dialog">
+    
+                <label>Código do Gift</label>
+    
+                <input
+                pInputText
+                [(ngModel)]="giftCode"
+                placeholder="GFT-12345678"
+                class="w-full" />
+
+                @if (giftOwner) {
+                    <div><strong>Nome:</strong> {{ giftOwner.name }}</div>
+                    <div><strong>WhatsApp:</strong> {{ giftOwner.phone }}</div>
+                }
+    
+                <p-button
+                [severity]="severityButtonValidating"
+                [label]="labelButtonValidate"
+                [loading]="validating"
+                [icon]="iconButtonValidating"
+                class="mt-4"
+                styleClass="w-full"
+                (onClick)="consultGift()" />
+    
+            </div>
+    
+            </p-dialog>
+    </div>
+} @else {
+    <div class="align-cards">
+        <p-card [style]="{ width: '20rem', overflow: 'hidden' }">
+            <ng-template #title>
+                <i class="pi pi-key" style="font-size: 1.5rem"></i> 
+                 Digite a chave de acesso
+            </ng-template>
+            <ng-template #subtitle> Senha ultra master secreta plus</ng-template>           
+
+            <p-password 
+                [(ngModel)]="key"
+                [toggleMask]="true"
+                [feedback]="false"
+                styleClass="w-full"
+                 />
+            
+            <ng-template #footer>
+                <p-button severity="success" icon="pi pi-sign-in" 
+                label="Entrar" styleClass="w-full" 
+                placeholder="Password"
+                (onClick)="storageKey()"
+                />
+            </ng-template>
+        </p-card> 
+    </div>
+}

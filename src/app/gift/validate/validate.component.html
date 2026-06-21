@@ -1,0 +1,21 @@
+<div class="align-items">
+@if(validated) {
+    <p-card [header]="header" [style]="color">
+        <p class="m-0">
+            @if (giftOwner) {
+                <div><strong>Nome:</strong> {{ giftOwner.name }}</div>
+                <div><strong>WhatsApp:</strong> {{ giftOwner.phone }}</div>
+            } @else {
+                {{erroMessage}}
+            }
+        </p>
+    </p-card>
+} @else {
+    
+    <p-progress-spinner ariaLabel="loading" />
+    <span>
+        Validando...
+    </span>
+}
+</div>
+
