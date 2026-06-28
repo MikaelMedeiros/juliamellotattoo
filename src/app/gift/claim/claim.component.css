@@ -1,9 +1,0 @@
-@reference "../../../styles.css";
-
-.align-cards {
-    @apply pb-4 pt-4 gap-4 grid grid-cols-1 flex justify-items-center;
-}
-
-.align-inputs {
-    @apply pb-2 pt-2 gap-4 grid grid-cols-1 flex justify-items-center;
-}

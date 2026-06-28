@@ -1,0 +1,9 @@
+@reference "../../../styles.css";
+
+.align-cards {
+    @apply pb-4 pt-4 gap-4 grid grid-cols-1 flex justify-items-center;
+}
+
+.gift-dialog {
+  @apply flex flex-col gap-3;
+}

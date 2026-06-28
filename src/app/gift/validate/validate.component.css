@@ -1,5 +1,0 @@
-@reference "../../../styles.css";
-
-.align-items {
-    @apply pb-4 pt-4 gap-4 grid grid-cols-1 flex justify-items-center;
-}

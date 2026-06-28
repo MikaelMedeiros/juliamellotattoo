@@ -1,0 +1,11 @@
+@reference "../../../styles.css"; 
+
+.barra-preta-fixa {
+  @apply top-0 left-0 w-full bg-black flex justify-center h-32;
+}
+
+.logo-bg {
+  @apply bg-[url(public/Logotipoassinatura002.png)] bg-center bg-no-repeat;
+  background-size: auto 60%;
+  height: 100px;
+}
