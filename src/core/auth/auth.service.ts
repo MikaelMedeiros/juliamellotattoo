@@ -36,7 +36,7 @@ export class AuthService {
     private readonly http: HttpClient
   ) {
 
-    const user = sessionStorage.getItem(this.USER_KEY);
+    const user = localStorage.getItem(this.USER_KEY);
 
     if (user) {
       this.user.set(JSON.parse(user));
@@ -45,7 +45,7 @@ export class AuthService {
   }
 
   readonly token = signal<string | null>(
-    sessionStorage.getItem(this.TOKEN_KEY)
+    localStorage.getItem(this.TOKEN_KEY)
   );
 
   readonly user = signal<AuthUser | null>(null);
@@ -61,9 +61,9 @@ export class AuthService {
       )
     );
 
-    sessionStorage.setItem(this.TOKEN_KEY, response.token);
+    localStorage.setItem(this.TOKEN_KEY, response.token);
 
-    sessionStorage.setItem(
+    localStorage.setItem(
       this.USER_KEY,
       JSON.stringify(response.user)
     );
@@ -76,8 +76,8 @@ export class AuthService {
 
   logout(): void {
 
-    sessionStorage.removeItem(this.TOKEN_KEY);
-    sessionStorage.removeItem(this.USER_KEY);
+    localStorage.removeItem(this.TOKEN_KEY);
+    localStorage.removeItem(this.USER_KEY);
 
     this.token.set(null);
     this.user.set(null);

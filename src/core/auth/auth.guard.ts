@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from './auth.service';
 
-export const authGuard: CanActivateFn = () => {
+export const authGuard: CanActivateFn = (route, state) => {
 
   const auth = inject(AuthService);
   const router = inject(Router);
@@ -17,5 +17,12 @@ export const authGuard: CanActivateFn = () => {
 
   console.log('BLOQUEOU');
 
-  return router.createUrlTree(['/login']);
+  return router.createUrlTree(
+    ['/login'],
+    {
+      queryParams: {
+        redirect: state.url
+      }
+    }
+  );
 };

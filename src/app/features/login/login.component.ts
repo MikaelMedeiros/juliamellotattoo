@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 
 import { AuthService } from 'src/core/auth/auth.service';
@@ -16,7 +16,8 @@ export class LoginComponent {
   constructor(
     private readonly googleOAuthProvider: GoogleOAuthProvider,
     private readonly authService: AuthService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly route: ActivatedRoute
   ) {}
 
   async login(): Promise<void> {
@@ -25,9 +26,16 @@ export class LoginComponent {
 
       const code = await this.googleOAuthProvider.login();
 
-      await this.authService.login(code);
+      await this.authService.login(code);            
 
-      await this.router.navigate(['/admin/main']);
+      const redirect =
+        this.route.snapshot.queryParamMap.get('redirect');
+
+      if (redirect) {
+        await this.router.navigateByUrl(redirect);
+      } else {
+        await this.router.navigate(['/admin/main']);
+      }
 
     } catch (error) {
 
