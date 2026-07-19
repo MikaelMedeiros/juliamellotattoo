@@ -37,147 +37,20 @@
 
 </div>
 
-<div class="flex flex-col items-center justify-center pt-[15vh]">
+<div class="min-h-screen pt-8 pb-20 px-4">
     <router-outlet></router-outlet>
 </div>
 
-@switch (menyType) {
-    @case (1) {
-
-        <div class="flex justify-center mb-4 pt-4 px-4 fixed bottom-0 left-0 right-0 z-50">
-            <p-selectbutton
-                [options]="menuOptions"
-                [(ngModel)]="value"
-                optionLabel="justify"
-                (onOptionClick)="navigate($event.option)">
-                <ng-template #item let-item>
-                    <i [class]="item.icon"></i>
-                </ng-template>
-            </p-selectbutton>
-        </div> 
-    }
-    @case (2) {
-        <nav
-            class="fixed bottom-0 left-0 right-0 z-50
-                border-t shadow-lg">
-
-            <div class="grid grid-cols-3">
-
-                <a
-                    routerLink="/admin/quote"
-                    routerLinkActive="text-primary border-t-2 border-primary"
-                    class="flex flex-col items-center py-3 text-gray-500">
-
-                    <i class="pi pi-calculator text-xl"></i>
-
-                    <span class="text-xs mt-1">
-                        Quotes
-                    </span>
-
-                </a>
-
-                <a
-                    routerLink="/admin/main"
-                    routerLinkActive="text-primary border-t-2 border-primary"
-                    [routerLinkActiveOptions]="{exact:true}"
-                    class="flex flex-col items-center py-3 text-gray-500">
-
-                    <i class="pi pi-home text-xl"></i>
-
-                    <span class="text-xs mt-1">
-                        Home
-                    </span>
-
-                </a>
-
-                <a
-                    routerLink="/admin/gift"
-                    routerLinkActive="text-primary border-t-2 border-primary"
-                    class="flex flex-col items-center py-3 text-gray-500">
-
-                    <i class="pi pi-gift text-xl"></i>
-
-                    <span class="text-xs mt-1">
-                        Gifts
-                    </span>
-
-                </a>
-
-            </div>
-
-        </nav>
-    }
-    @case (3) {
-        <nav
-            class="fixed bottom-5 left-1/2 -translate-x-1/2
-                w-[92%] max-w-md
-                rounded-full
-                bg-white/90 backdrop-blur-xl
-                shadow-2xl border border-gray-200
-                z-50">
-
-            <div class="grid grid-cols-3 p-2">
-
-                <a
-                    routerLink="/admin/main"
-                    routerLinkActive="bg-gray-900 text-white scale-105 shadow-lg"
-                    [routerLinkActiveOptions]="{ exact: true }"
-                    class="flex flex-col items-center justify-center
-                        rounded-full
-                        py-3
-                        text-gray-500
-                        transition-all
-                        duration-300
-                        hover:-translate-y-0.5">
-
-                    <i class="pi pi-home text-xl"></i>
-
-                    <span class="text-xs font-medium mt-1">
-                        Home
-                    </span>
-
-                </a>
-
-                <a
-                    routerLink="/admin/quote"
-                    routerLinkActive="bg-gray-900 text-white scale-105 shadow-lg"
-                    class="flex flex-col items-center justify-center
-                        rounded-full
-                        py-3
-                        text-gray-500
-                        transition-all
-                        duration-300
-                        hover:-translate-y-0.5">
-
-                    <i class="pi pi-calculator text-xl"></i>
-
-                    <span class="text-xs font-medium mt-1">
-                        Orçamentos
-                    </span>
-
-                </a>
-
-                <a
-                    routerLink="/admin/gift"
-                    routerLinkActive="bg-gray-900 text-white scale-105 shadow-lg"
-                    class="flex flex-col items-center justify-center
-                        rounded-full
-                        py-3
-                        text-gray-500
-                        transition-all
-                        duration-300
-                        hover:-translate-y-0.5">
-
-                    <i class="pi pi-gift text-xl"></i>
-
-                    <span class="text-xs font-medium mt-1">
-                        Gifts
-                    </span>
-
-                </a>
-
-            </div>
-
-        </nav>
-    }
-}
+<div class="flex justify-center mb-4 pt-4 px-4 fixed bottom-0 left-0 right-0 z-50">
+    <p-selectbutton
+        styleClass="menu-select"
+        [options]="menuOptions"
+        [(ngModel)]="value"
+        optionLabel="justify"
+        (onOptionClick)="navigate($event.option)">
+        <ng-template #item let-item>
+            <i [class]="item.icon"></i>
+        </ng-template>
+    </p-selectbutton>
+</div> 
+ 

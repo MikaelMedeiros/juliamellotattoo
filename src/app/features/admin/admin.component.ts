@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { RouterOutlet, Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterOutlet, Router } from '@angular/router';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { FormsModule } from '@angular/forms';
 import { MenuItem } from 'primeng/api';
@@ -12,9 +12,7 @@ import { ButtonModule } from 'primeng/button';
   imports: [RouterOutlet, 
     SelectButtonModule, 
     FormsModule, 
-    RouterOutlet,
-    RouterLink,
-    RouterLinkActive,
+    RouterOutlet,    
     SpeedDialModule,
     ButtonModule],
   templateUrl: './admin.component.html',
@@ -30,8 +28,6 @@ export class AdminComponent {
 
     constructor(
       private router: Router) {}
-
-      
 
     menuOptions: any[] = [
         { icon: 'pi pi-calculator', justify: 'Orçamento', navigate: '/admin/quote' },

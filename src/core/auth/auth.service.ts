@@ -56,7 +56,7 @@ export class AuthService {
 
     const response = await firstValueFrom(
       this.http.post<LoginResponse>(
-        '/api/auth/google/login',
+        `${environment.apiUrl}/api/auth/google/login`,
         { code }
       )
     );

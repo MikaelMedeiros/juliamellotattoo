@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Gift } from './model/gift.model';
 import { GiftFilterDto } from './model/gift-filter.dto';
 import { GiftPageDto } from './model/gift-page.dto';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class GiftService {
 
   private readonly http = inject(HttpClient);
 
-  private readonly api = '/api';
+  private readonly api = `${environment.apiUrl}/api`;
   private readonly resource = `${this.api}/gifts`;
 
   createGift(): Observable<{
