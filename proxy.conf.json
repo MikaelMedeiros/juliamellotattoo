@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "http://localhost:8787",
+    "target": "https://juliamello-api.juliamellopacheco.workers.dev",
     "secure": true,
     "changeOrigin": true
   }
