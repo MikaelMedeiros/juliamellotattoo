@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "https://gift-card.mikaelnascimentomedeiros.workers.dev",
+    "target": "http://localhost:8787",
     "secure": true,
     "changeOrigin": true
   }

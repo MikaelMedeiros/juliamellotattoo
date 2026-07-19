@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
+
 import { AuthService } from 'src/core/auth/auth.service';
-import { GoogleIdentityProvider } from 'src/core/auth/providers/google/google-identity.provider';
+import { GoogleOAuthProvider } from 'src/core/auth/providers/google/google-oauth.provider';
 
 @Component({
   selector: 'app-login',
@@ -13,27 +14,35 @@ import { GoogleIdentityProvider } from 'src/core/auth/providers/google/google-id
 export class LoginComponent {
 
   constructor(
-      private readonly googleIdentityProvider: GoogleIdentityProvider,
-      private readonly router: Router,
-      private readonly authService: AuthService
+    private readonly googleOAuthProvider: GoogleOAuthProvider,
+    private readonly authService: AuthService,
+    private readonly router: Router
   ) {}
 
   async login(): Promise<void> {
-  try {
 
-      const user = await this.googleIdentityProvider.login();      
+    try {
 
-      this.authService.login(user);
+      const code = await this.googleOAuthProvider.login();
+
+      await this.authService.login(code);
 
       await this.router.navigate(['/admin/main']);
 
     } catch (error) {
-      console.error('LOGIN ERROR', error);
+
+      console.error(error);
+
     }
+
   }
 
-  logout() {
+  logout(): void {
+
     this.authService.logout();
+
     this.router.navigate(['/login']);
+
   }
+
 }

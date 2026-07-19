@@ -5,9 +5,11 @@ import { providePrimeNG } from 'primeng/config';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { definePreset } from '@primeng/themes';
 import Aura from '@primeng/themes/aura';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 import { routes } from './app.routes';
+import { authInterceptor } from 'src/core/auth/auth.interceptor';
+import { MessageService } from 'primeng/api';
 
 const JuPreset = definePreset(Aura, {
   semantic: {
@@ -29,13 +31,18 @@ const JuPreset = definePreset(Aura, {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideHttpClient(),
+    MessageService,
+    provideHttpClient(
+      withInterceptors([
+        authInterceptor
+      ])
+    ),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(
       routes,
       withInMemoryScrolling({
         anchorScrolling: 'enabled'
-      })
+      }),        
     ),
     provideAnimationsAsync(),
     provideAnimations(),

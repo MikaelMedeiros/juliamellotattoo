@@ -1,0 +1,187 @@
+<form
+            [formGroup]="form"
+            class="flex flex-col md:flex-row gap-3 items-end mb-4">
+<div class="align-cards">
+
+    <p-card header="Gifts Gerados" [style]="{ width: '100%' }">
+
+
+
+            <div class="flex-1">
+
+                <label>Nome</label>
+
+                <input
+                    pInputText
+                    class="w-full"
+                    formControlName="name"
+                    placeholder="Pesquisar por nome">
+
+            </div>
+
+            <p-button
+                icon="pi pi-filter"
+                severity="secondary"
+                [outlined]="true"
+                (onClick)="filterDialog = true">
+            </p-button>
+
+            <p-button
+                icon="pi pi-filter-slash"
+                label="Limpar"
+                severity="secondary"
+                (onClick)="clear()">
+            </p-button>
+
+ 
+
+        <p-divider></p-divider>
+
+        <p-table
+            selectionMode="single" 
+            [value]="gifts"
+            [loading]="loading"
+            [lazy]="true"
+            [paginator]="true"
+            [rows]="pageSize"
+            [totalRecords]="totalRecords"
+            [rowsPerPageOptions]="[5,10,20,50]"
+            (onLazyLoad)="onLazyLoad($event)"
+            responsiveLayout="scroll">
+
+            <ng-template pTemplate="header">
+
+                <tr>
+                    <th>Nome</th>
+                    <th>Whatsapp</th>
+                    <th>Status</th>
+                </tr>
+
+            </ng-template>
+
+            <ng-template
+                pTemplate="body"
+                let-gift>
+
+                <tr
+                    class="cursor-pointer hover:bg-gray-50"
+                    (click)="copyClaimLink(gift)"
+                >
+
+                    <td>{{ gift.name || '-' }}</td>
+
+                    <td>{{ gift.phone || '-' }}</td>
+
+                    <td>
+                        <p-tag
+                            [severity]="getSeverity(gift)"
+                            [value]="getStatus(gift)">
+                        </p-tag>
+                    </td>
+
+                </tr>
+
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+
+                <tr>
+                    <td colspan="3">
+                        Nenhum gift encontrado.
+                    </td>
+                </tr>
+
+            </ng-template>
+
+        </p-table>
+
+    </p-card>
+
+</div>
+
+<p-dialog
+    header="Filtros"
+    [(visible)]="filterDialog"
+    [modal]="true"
+    [style]="{ width: '90vw', maxWidth: '500px' }">
+
+    <div class="flex flex-col gap-4">
+
+        <div>
+
+            <label>WhatsApp</label>
+
+            <input
+                pInputText
+                class="w-full"
+                formControlName="phone">
+
+        </div>
+
+        <div>
+
+            <label>Resgatado</label>
+
+            <p-select
+                class="w-full"
+                formControlName="claimed"
+                [options]="claimedOptions"
+                optionLabel="label"
+                optionValue="value">
+            </p-select>
+
+        </div>
+
+        <div>
+
+            <label>Utilizado</label>
+
+            <p-select
+                class="w-full"
+                formControlName="used"
+                [options]="usedOptions"
+                optionLabel="label"
+                optionValue="value">
+            </p-select>
+
+        </div>
+
+        <div>
+
+            <label>Expira de</label>
+
+            <p-datepicker
+                class="w-full"
+                formControlName="expirationStart"
+                dateFormat="dd/mm/yy">
+            </p-datepicker>
+
+        </div>
+
+        <div>
+
+            <label>Até</label>
+
+            <p-datepicker
+                class="w-full"
+                formControlName="expirationEnd"
+                dateFormat="dd/mm/yy">
+            </p-datepicker>
+
+        </div>
+
+    </div>
+
+    <ng-template pTemplate="footer">
+
+        <p-button
+            label="Fechar"
+            severity="secondary"
+            (onClick)="filterDialog = false">
+        </p-button>
+
+    </ng-template>
+
+</p-dialog>
+
+       </form>

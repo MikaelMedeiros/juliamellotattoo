@@ -1,11 +1,11 @@
 export interface Gift {
   id: string;
-  createdAt: string;
+  name: string;
+  phone: string;
   claimed: boolean;
-  claimedAt?: string;
   used: boolean;
-  usedAt?: string;
-  expiresAt?: string;
-  name?: string;
-  phone?: string;
+  createdAt: string;
+  expiresAt: string | null;
+  claimedAt: string | null;
+  usedAt: string | null;
 }

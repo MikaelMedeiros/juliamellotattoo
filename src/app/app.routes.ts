@@ -8,6 +8,7 @@ import { authGuard } from 'src/core/auth/auth.guard';
 import { AdminComponent } from './features/admin/admin.component';
 import { QuoteComponent } from './features/quote/quote.component';
 import { MainComponent } from './features/main/main.component';
+import { ListComponent } from './features/gift/list/list.component';
 
 export const routes: Routes = [
   {
@@ -20,7 +21,7 @@ export const routes: Routes = [
   },
   {
     path: 'validate/:giftId',
-    canActivate: [authGuard],
+    //canActivate: [authGuard],
     component: ValidateComponent
   },
   {
@@ -28,13 +29,21 @@ export const routes: Routes = [
     component: LoginComponent
   },
   {
+    path: 'auth/callback',
+    component: LoginComponent
+  },  
+  {
     path: 'admin',
     component: AdminComponent,
-    canActivate: [authGuard],
+    //canActivate: [authGuard],
     children: [      
       {
         path: 'gift',
         component: GiftComponent
+      },
+      {
+        path: 'gift/list',
+        component: ListComponent
       },      
       {
         path: 'main',

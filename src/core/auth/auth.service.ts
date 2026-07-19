@@ -1,5 +1,8 @@
 import { Injectable, computed, signal } from '@angular/core';
-import { GoogleUser } from './models/google-user';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
+
+import { environment } from 'src/environments/environment';
 
 export interface AuthUser {
   email: string;
@@ -7,15 +10,31 @@ export interface AuthUser {
   picture?: string;
 }
 
+interface LoginResponse {
+  token: string;
+  user: {
+    email: string;
+    name: string;
+    picture?: string;
+  };
+  organization: {
+    id: string;
+    name: string;
+    slug: string;
+  };
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private readonly TOKEN_KEY = 'auth-token';
+  private readonly TOKEN_KEY = 'access-token';
   private readonly USER_KEY = 'auth-user';
 
-  constructor() {
+  constructor(
+    private readonly http: HttpClient
+  ) {
 
     const user = sessionStorage.getItem(this.USER_KEY);
 
@@ -25,31 +44,34 @@ export class AuthService {
 
   }
 
-  readonly idToken = signal<string | null>(
+  readonly token = signal<string | null>(
     sessionStorage.getItem(this.TOKEN_KEY)
   );
 
   readonly user = signal<AuthUser | null>(null);
 
-  readonly isAuthenticated = computed(() => this.idToken() !== null);
+  readonly isAuthenticated = computed(() => this.token() !== null);
 
-  login(user: GoogleUser): void {
+  async login(code: string): Promise<void> {
 
-    sessionStorage.setItem(this.TOKEN_KEY, user.accessToken);
+    const response = await firstValueFrom(
+      this.http.post<LoginResponse>(
+        '/api/auth/google/login',
+        { code }
+      )
+    );
 
-    sessionStorage.setItem(this.USER_KEY, JSON.stringify({
-      email: user.email,
-      name: user.name,
-      picture: user.picture
-    }));
+    sessionStorage.setItem(this.TOKEN_KEY, response.token);
 
-    this.idToken.set(user.accessToken);
+    sessionStorage.setItem(
+      this.USER_KEY,
+      JSON.stringify(response.user)
+    );
 
-    this.user.set({
-      email: user.email,
-      name: user.name,
-      picture: user.picture
-    });
+    this.token.set(response.token);
+
+    this.user.set(response.user);
+
   }
 
   logout(): void {
@@ -57,8 +79,9 @@ export class AuthService {
     sessionStorage.removeItem(this.TOKEN_KEY);
     sessionStorage.removeItem(this.USER_KEY);
 
-    this.idToken.set(null);
+    this.token.set(null);
     this.user.set(null);
 
   }
+
 }

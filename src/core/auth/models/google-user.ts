@@ -1,5 +1,5 @@
 export interface GoogleUser {
-  accessToken: string;
+  idToken: string;
 
   email: string;
 

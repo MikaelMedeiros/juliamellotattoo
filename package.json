@@ -24,6 +24,7 @@
     "@primeng/themes": "^19.0.9",
     "@tailwindcss/postcss": "^4.0.13",
     "angularx-qrcode": "^19.0.0",
+    "intl-tel-input": "^29.1.2",
     "postcss": "^8.5.3",
     "primeicons": "^7.0.0",
     "primeng": "^19.0.9",

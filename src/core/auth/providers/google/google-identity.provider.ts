@@ -10,45 +10,39 @@ declare const google: any;
 export class GoogleIdentityProvider {
 
   login(): Promise<GoogleUser> {
-
+console.log(environment.googleClientId);
     return new Promise((resolve, reject) => {
 
-      const client = google.accounts.oauth2.initTokenClient({
+      google.accounts.id.initialize({
         client_id: environment.googleClientId,
-        scope: 'openid email profile',
 
-        callback: async (response: any) => {
-
-          if (response.error) {
-            reject(response);
-            return;
-          }
-
+        callback: (response: any) => {
+console.log(response);
           try {
 
-            const user = await fetch(
-              'https://www.googleapis.com/oauth2/v3/userinfo',
-              {
-                headers: {
-                  Authorization: `Bearer ${response.access_token}`
-                }
-              }
-            ).then(r => r.json());
+            const payload = JSON.parse(
+              atob(response.credential.split('.')[1])
+            );
 
             resolve({
-              accessToken: response.access_token,
-              email: user.email,
-              name: user.name,
-              picture: user.picture
+              idToken: response.credential,
+              email: payload.email,
+              name: payload.name,
+              picture: payload.picture
             });
 
-          } catch (error) {
-            reject(error);
+          } catch (e) {
+            reject(e);
           }
+
         }
       });
 
-      client.requestAccessToken();
+      google.accounts.id.prompt((notification: any) => {
+
+        console.log(notification);
+
+      });
     });
   }
 }

@@ -118,4 +118,41 @@ export class ClaimComponent implements OnInit {
     this.severityMessage = severity;
     this.showMessage = show;
   }
+
+  onPhoneInput(): void {
+    const control = this.form.get('phone');
+    if (!control) return;
+
+    const original = control.value ?? '';
+
+    // Mantém apenas números e um '+' no início
+    let value = original
+      .replace(/[^\d+]/g, '')
+      .replace(/(?!^)\+/g, '');
+
+    const hasPlus = value.startsWith('+');
+
+    // Remove o + para formatar
+    const digits = hasPlus ? value.substring(1) : value;
+
+    // Agrupa em blocos de 3 ou 4 dígitos apenas para facilitar a leitura
+    const groups: string[] = [];
+    let i = 0;
+
+    while (i < digits.length) {
+      const remaining = digits.length - i;
+
+      if (remaining > 4) {
+        groups.push(digits.substring(i, i + 3));
+        i += 3;
+      } else {
+        groups.push(digits.substring(i));
+        break;
+      }
+    }
+
+    value = (hasPlus ? '+' : '') + groups.join(' ');
+
+    control.setValue(value, { emitEvent: false });
+  }
 }

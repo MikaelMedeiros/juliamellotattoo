@@ -1,27 +1,20 @@
 import { inject, Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 import { Gift } from './model/gift.model';
+import { GiftFilterDto } from './model/gift-filter.dto';
+import { GiftPageDto } from './model/gift-page.dto';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GiftService {
 
-  private http = inject(HttpClient);
+  private readonly http = inject(HttpClient);
 
-  private readonly KEY = 'gift-admin-key';
   private readonly api = '/api';
-
-  private get key(): string {
-    return localStorage.getItem(this.KEY) ?? '';
-  }
-
-  private get headers(): HttpHeaders {
-    return new HttpHeaders({
-      'x-api-key': this.key
-    });
-  }
+  private readonly resource = `${this.api}/gifts`;
 
   createGift(): Observable<{
     giftId: string;
@@ -32,32 +25,28 @@ export class GiftService {
       giftId: string;
       claimUrl: string;
     }>(
-      `${this.api}/gifts/create`,
-      {},
-      {
-        headers: this.headers
-      }
+      `${this.resource}/create`,
+      {}
     );
   }
 
   getGift(giftId: string): Observable<Gift> {
-
     return this.http.get<Gift>(
-      `${this.api}/gifts/${giftId}`,
-      {
-        headers: this.headers
-      }
+      `${this.resource}/${giftId}`
+    );
+  }
+
+  getGifts(filter: GiftFilterDto): Observable<GiftPageDto> {
+    return this.http.post<GiftPageDto>(
+      `${this.resource}/search`,
+      filter
     );
   }
 
   validateGift(giftId: string): Observable<Gift> {
-
     return this.http.post<Gift>(
-      `${this.api}/gifts/${giftId}/validate`,
-      {},
-      {
-        headers: this.headers
-      }
+      `${this.resource}/${giftId}/validate`,
+      {}
     );
   }
 
@@ -68,11 +57,12 @@ export class GiftService {
   ): Observable<Gift> {
 
     return this.http.post<Gift>(
-      `${this.api}/gifts/${giftId}/claim`,
+      `${this.resource}/${giftId}/claim`,
       {
         name,
         phone
       }
     );
   }
+
 }

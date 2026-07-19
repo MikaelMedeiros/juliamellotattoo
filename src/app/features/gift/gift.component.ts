@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -10,6 +10,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { PasswordModule } from 'primeng/password';
 import { Gift } from './model/gift.model';
 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gift',
@@ -30,7 +31,7 @@ export class GiftComponent implements OnInit {
   qrValue = '';
 
   logged: boolean = true;
-  private readonly KEY = 'gift-admin-key';
+  private readonly KEY = 'gift-admin-key';  
 
   validating: boolean = false;
   generating: boolean = false;
@@ -52,6 +53,8 @@ export class GiftComponent implements OnInit {
     private giftService: GiftService,
     private clipboard: Clipboard
   ) {}
+
+  private readonly router = inject(Router);
 
   ngOnInit(): void {
     if(!localStorage.getItem(this.KEY)) {
@@ -131,5 +134,9 @@ export class GiftComponent implements OnInit {
   logout() {
     window.localStorage.removeItem(this.KEY);
     this.logged = false;
+  }
+
+  navigateToList() {
+    this.router.navigate(['/admin/gift/list']);
   }
 }

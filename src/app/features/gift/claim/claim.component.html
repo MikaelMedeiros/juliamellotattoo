@@ -13,23 +13,34 @@
             </ng-template>
             <ng-template #subtitle> Informe seu nome e WhatsApp para resgatar o gift </ng-template>
 
-            <form
-                [formGroup]="form" class="align-inputs">
-                
-                <p-inputgroup >
+            <form [formGroup]="form" class="align-inputs">
+
+                <p-inputgroup>
                     <p-inputgroup-addon>
                         <i class="pi pi-user"></i>
                     </p-inputgroup-addon>
-                    <input pInputText formControlName="name" placeholder="Seu nome" class="w-[75%] p-2 border rounded" />
-                </p-inputgroup>  
-                
-                <div class="w-full flex grid grid-cols-[15%_80%]">
+
+                    <input
+                        pInputText
+                        formControlName="name"
+                        placeholder="Seu nome"
+                        class="w-[75%] p-2 border rounded" />
+                </p-inputgroup>
+
+                <p-inputgroup>
                     <p-inputgroup-addon>
                         <i class="pi pi-whatsapp"></i>
-                    </p-inputgroup-addon>                
-                            
-                    <p-inputmask mask="(99) 9 9999-9999" formControlName="phone" placeholder="(99) 9 9999-9999" />
-                </div>            
+                    </p-inputgroup-addon>
+
+                    <input
+                        pInputText
+                        type="tel"
+                        formControlName="phone"
+                        placeholder="Ex.: +55 11 99999-9999"
+                        class="w-[75%] p-2 border rounded"
+                        autocomplete="tel" />
+                </p-inputgroup>
+
             </form>
 
             <ng-template #footer>
