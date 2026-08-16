@@ -1,0 +1,60 @@
+@reference "../../../../../styles.css";
+
+.card {
+  @apply relative block h-56 w-full overflow-hidden
+         rounded-xl border border-white/10
+         bg-zinc-900 text-left;
+}
+
+.background {
+  @apply absolute inset-0
+         bg-cover bg-center
+         transition duration-500;
+}
+
+.group:hover .background {
+  @apply scale-105;
+}
+
+.overlay {
+  @apply absolute inset-0
+         bg-gradient-to-r
+         from-black/90
+         via-black/60
+         to-black/30;
+}
+
+.content {
+  @apply relative flex h-full items-center p-6;
+}
+
+.info {
+  @apply flex flex-col items-start;
+}
+
+.icon {
+  @apply mb-5 flex h-11 w-11
+         items-center justify-center
+         rounded-lg border border-white/30
+         bg-black/20 backdrop-blur-sm;
+}
+
+.title {
+  @apply text-2xl font-semibold text-white;
+}
+
+.description {
+  @apply mt-2 max-w-[180px]
+         text-sm text-white/65;
+}
+
+.arrow {
+  @apply absolute right-5 top-1/2
+         -translate-y-1/2
+         text-2xl text-white
+         transition-transform;
+}
+
+.group:hover .arrow {
+  @apply translate-x-1;
+}

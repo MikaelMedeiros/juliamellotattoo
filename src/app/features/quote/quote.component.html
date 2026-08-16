@@ -1,6 +1,6 @@
-<div class="align-cards">
-    <p-card [style]="{ width: '20rem', overflow: 'hidden' }">
-        <p-tabs value="1">
+<div class="align-cards mt-10">
+    <!-- <p-card [style]="{ width: '20rem', overflow: 'hidden' }"> -->
+        <p-tabs value="1" class="w-full">
             <p-tablist>
                 <p-tab value="1">                
                     <i class="pi pi-calculator"></i>
@@ -11,7 +11,10 @@
                 <p-tab *ngIf="showAdditionBudgetTab()" value="addition">
                     <i class="pi pi-arrow-up"></i>
                     <i class="pi pi-dollar"></i>
-                </p-tab>           
+                </p-tab>  
+                <p-tab value="4">                
+                    <i class="pi pi-pencil"></i>
+                </p-tab>         
             </p-tablist>    
             <p-tabpanels>
                 <p-tabpanel value="1">            
@@ -120,7 +123,7 @@
                     </form>
                 </p-tabpanel>   
                     
-                <!-- <p-tabpanel *ngIf="showAdditionBudgetTab()" value="addition">
+                <p-tabpanel *ngIf="showAdditionBudgetTab()" value="addition">
                     <form [formGroup]="additionPriceForm">
         
                         <div class="field" *ngFor="let item of fieldsAddition" >
@@ -128,7 +131,11 @@
                         <p-inputNumber  class="w-full" (onInput)="handleAddition($event.value, item.for)" formControlName={{item.formControlName}} inputId={{item.inputId}} suffix="%" [min]="0" [max]="100" [step]="0.5"> </p-inputNumber>          
                         </div>       
                     </form>   
-                </p-tabpanel>      -->
+                </p-tabpanel>
+
+                <p-tabpanel value="4">  
+
+                </p-tabpanel>  
             </p-tabpanels>
         </p-tabs>
         
@@ -170,5 +177,5 @@
                 {{hintText}}
             </p>
           </p-dialog> 
-    </p-card>
+    <!-- </p-card> -->
 </div>

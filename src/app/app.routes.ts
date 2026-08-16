@@ -33,9 +33,14 @@ export const routes: Routes = [
     component: LoginComponent
   },  
   {
+    path: 'orctattoo',
+    component: QuoteComponent
+
+  },
+  {
     path: 'admin',
     component: AdminComponent,
-    //canActivate: [authGuard],
+    canActivate: [authGuard],
     children: [      
       {
         path: 'gift',
@@ -52,14 +57,13 @@ export const routes: Routes = [
       {
         path: 'quote',
         component: QuoteComponent
-
       },
       {
         path: '',
         redirectTo: 'main',
         pathMatch: 'full'
       }
-    ]
+    ]    
   },
   {
     path: '**',

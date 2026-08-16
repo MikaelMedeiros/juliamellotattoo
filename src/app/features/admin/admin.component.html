@@ -1,4 +1,41 @@
+<div class="flex items-center justify-between px-5 py-4 fixed top-0 left-0 right-0 z-50">
 
+    <div>        
+        <p class="font-semibold">
+            {{ authService.user()?.name }}
+        </p>
+    </div>
+
+    <p-speeddial
+    [model]="profileItems"
+    direction="down"
+    type="quarter-circle"
+   
+    radius="80">
+
+    <ng-template pTemplate="button" let-toggleCallback="toggleCallback">
+        <button
+            type="button"
+            class="w-12 h-12 rounded-full overflow-hidden border-0 p-0 cursor-pointer"
+            (click)="toggleCallback($event)">
+
+            @if (authService.user()?.picture) {
+                <img
+                    [src]="authService.user()?.picture"
+                    [alt]="authService.user()?.name"
+                    class="w-full h-full object-cover" />
+            } @else {
+                <div class="w-full h-full flex items-center justify-center bg-primary text-white">
+                    <i class="pi pi-user"></i>
+                </div>
+            }
+
+        </button>
+    </ng-template>  
+
+</p-speeddial>  
+
+</div>
 
 <div class="min-h-screen pt-8 pb-20 px-4">
     <router-outlet></router-outlet>
