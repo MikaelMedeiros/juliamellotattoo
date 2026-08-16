@@ -1,0 +1,38 @@
+@reference "../../../../../styles.css";
+
+.upload-container {
+  @apply flex flex-col gap-3;
+}
+
+.header {
+  @apply flex items-center;
+}
+
+.title {
+  @apply text-lg font-semibold text-zinc-800;
+}
+
+.recommendation {
+  @apply mt-1 flex items-center gap-2
+         text-sm text-zinc-500;
+}
+
+.recommendation i {
+  @apply text-zinc-400;
+}
+
+.recommendation strong {
+  @apply font-medium text-zinc-700;
+}
+
+:host ::ng-deep .p-fileupload {
+  @apply overflow-hidden rounded-xl;
+}
+
+:host ::ng-deep .p-fileupload-header {
+  @apply gap-2;
+}
+
+:host ::ng-deep .p-fileupload-content {
+  @apply min-h-32;
+}
