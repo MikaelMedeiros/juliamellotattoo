@@ -1,34 +1,373 @@
-<div class="upload-container">
+@if(false) {
 
-  <div class="header">
+  <div class="upload-container">
+  
+  
+  
+  </div>
+} @else {
+  <div class="min-h-screen bg-[#080b10] px-5 py-6 text-white sm:px-8">
+  <div class="mx-auto w-full max-w-2xl">
 
-    <h3 class="title">
-      {{ config.label }}
-    </h3>
+    <!-- Header -->
+    <div class="relative mb-7 text-center">
 
-    <p class="recommendation">
-      <i class="pi pi-info-circle"></i>
+      <p-button
+        icon="pi pi-arrow-left"
+        [text]="true"
+        [rounded]="true"
+        severity="secondary"
+        styleClass="
+          !absolute
+          !left-0
+          !top-0
+          !h-12
+          !w-12
+          !bg-[#171b22]
+          !border
+          !border-[#242a34]
+          !text-white
+          hover:!bg-[#202631]
+        "
+      />
 
-      Recomendo tamanho
-      <strong>{{ config.recommendedSize }}</strong>
-      para essa seção.
-    </p>
+      <h1 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+        Galeria de Imagens
+      </h1>
+
+      <p
+        class="
+          mx-auto
+          mt-4
+          max-w-xl
+          text-sm
+          leading-6
+          text-gray-400
+          sm:text-base
+        "
+      >
+        Gerencie as imagens da sua galeria.
+        Você pode trocar ou remover as imagens existentes
+        ou adicionar novas.
+      </p>
+
+    </div>
+
+
+    <!-- Gallery -->
+    @if (uploadedFiles.length > 0) {
+
+      <div
+        class="
+          grid
+          grid-cols-1
+          gap-3
+          sm:gap-4
+        "
+      >
+
+        @for (image of uploadedFiles; track $index; let i = $index) {
+
+          <!-- Image Card -->
+          <div
+            class="
+              group
+              relative
+              aspect-6/3            
+              overflow-hidden
+              rounded-2xl
+              border
+              border-[#292f39]
+              bg-[#10141a]
+            "
+          >
+
+            <!-- Image -->
+            <img
+              [src]="image.url"
+              [alt]="'Imagem ' + (i + 1)"
+              class="
+                absolute
+                inset-0
+                h-full
+                w-full
+                object-cover
+              "
+            />
+
+
+            <!-- Dark Overlay -->
+            <div
+              class="
+                pointer-events-none
+                absolute
+                inset-0
+                bg-gradient-to-b
+                from-black/50
+                via-transparent
+                to-black/70
+              "
+            ></div>
+
+
+            <!-- Image Number -->
+            <div
+              class="
+                absolute
+                left-3
+                top-3
+                flex
+                h-9
+                w-9
+                items-center
+                justify-center
+                rounded-xl
+                border
+                border-white/10
+                bg-black/70
+                text-sm
+                font-semibold
+                text-white
+                backdrop-blur-md
+              "
+            >
+              {{ i + 1 }}
+            </div>
+
+
+            <!-- Actions -->
+            <div
+              class="
+                absolute
+                bottom-3
+                left-3
+                right-3
+                flex
+                gap-2
+              "
+            >
+
+              <!-- Trocar -->
+              <p-button
+                icon="pi pi-sync"
+                label="Trocar"
+                severity="secondary"
+                [outlined]="true"
+                [disabled]="isUploading"
+                (onClick)="openReplaceDialog(i)"
+                styleClass="
+                  !flex-1
+                  !justify-center
+                  !border-[#8b5cf6]/50
+                  !bg-black/75
+                  !text-[#a78bfa]
+                  backdrop-blur-md
+                  hover:!border-[#8b5cf6]
+                  hover:!bg-[#17111f]
+                "
+              />
+
+
+              <!-- Remover -->
+              <p-button
+                icon="pi pi-trash"
+                label="Remover"
+                severity="danger"
+                [outlined]="true"
+                [disabled]="isUploading"
+                (onClick)="removeImage(i)"
+                styleClass="
+                  !flex-1
+                  !justify-center
+                  !border-red-500/50
+                  !bg-black/75
+                  !text-red-400
+                  backdrop-blur-md
+                  hover:!border-red-500
+                  hover:!bg-red-950/50
+                "
+              />
+
+            </div>
+
+          </div>
+        }
+
+      </div>
+
+    }
+
+
+    <!-- Empty State -->
+    @if (uploadedFiles.length === 0) {
+
+      <div
+        class="
+          mb-4
+          rounded-2xl
+          border
+          border-[#292f39]
+          bg-[#10141a]
+          px-6
+          py-10
+          text-center
+        "
+      >
+
+        <i
+          class="
+            pi
+            pi-images
+            mb-4
+            text-4xl
+            text-gray-600
+          "
+        ></i>
+
+        <p class="text-base font-medium text-gray-300">
+          Nenhuma imagem adicionada
+        </p>
+
+        <p class="mt-2 text-sm text-gray-500">
+          Adicione uma imagem para começar sua galeria.
+        </p>
+
+      </div>
+
+    }
+
+
+    <!-- Add Image -->
+    <div class="mt-4">
+
+      <button
+        type="button"
+        class="
+          flex
+          min-h-44
+          w-full
+          cursor-pointer
+          flex-col
+          items-center
+          justify-center
+          rounded-2xl
+          border
+          border-dashed
+          border-[#7c3aed]
+          bg-[#0c0f15]
+          px-6
+          py-8
+          text-center
+          transition
+          duration-200
+          hover:border-[#a78bfa]
+          hover:bg-[#11101a]
+          active:scale-[0.99]
+        "
+        [disabled]="isUploading"
+        (click)="openAddDialog()"
+      >
+
+        <!-- Plus Icon -->
+        <div
+          class="
+            mb-4
+            flex
+            h-16
+            w-16
+            items-center
+            justify-center
+            rounded-full
+            border-2
+            border-[#8b5cf6]
+            text-[#a78bfa]
+          "
+        >
+          <i class="pi pi-plus text-2xl"></i>
+        </div>
+
+
+        <span
+          class="
+            text-lg
+            font-semibold
+            text-[#a78bfa]
+          "
+        >
+          Adicionar imagem
+        </span>
+
+
+        <span
+          class="
+            mt-2
+            text-sm
+            text-gray-500
+          "
+        >
+          PNG, JPG ou WEBP até 5MB
+        </span>
+
+      </button>
+
+    </div>
+
+
+    <!-- Loading -->
+    @if (isUploading) {
+
+      <div
+        class="
+          mt-4
+          flex
+          items-center
+          justify-center
+          gap-2
+          text-sm
+          text-gray-400
+        "
+      >
+        <i class="pi pi-spin pi-spinner"></i>
+
+        <span>
+          Enviando imagem...
+        </span>
+      </div>
+
+    }
+
+
+    <!-- View Site -->
+    <div class="mt-5 flex justify-center">
+
+      <p-button
+        label="Ver no site"
+        icon="pi pi-external-link"
+        severity="secondary"
+        [outlined]="true"
+        [disabled]="isUploading"
+        (onClick)="openSite()"
+        styleClass="
+          !border-[#292f39]
+          !bg-[#10141a]
+          !text-gray-300
+          hover:!bg-[#171b22]
+          hover:!text-white
+        "
+      />
+
+    </div>
+
+
+    <!-- Hidden File Input -->
+    <input
+      #fileInput
+      type="file"
+      class="hidden"
+      accept="image/png,image/jpeg,image/webp"
+      (change)="onFileSelected($event)"
+    />
 
   </div>
-
-  <p-fileupload
-    mode="advanced"
-    [multiple]="config.maxFiles > 1"
-    [accept]="'image/*'"
-    [maxFileSize]="config.maxFileSize"
-    [fileLimit]="config.maxFiles"
-    [customUpload]="true"
-    [showUploadButton]="true"
-    [showCancelButton]="true"
-    chooseLabel="Selecionar"
-    uploadLabel="Enviar"
-    cancelLabel="Cancelar"
-    (uploadHandler)="onUpload($event)"
-  />
-
 </div>
+}

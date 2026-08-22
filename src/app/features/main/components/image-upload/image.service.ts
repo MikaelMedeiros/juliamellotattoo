@@ -27,4 +27,10 @@ export class ImageService {
             formData
         );
     }
+
+    getImages(section: UploadSection): Observable<ImageUploadResponse[]> {
+        return this.http.get<ImageUploadResponse[]>(
+            `${this.resource}?section=${section}`
+        );
+    }
 }
