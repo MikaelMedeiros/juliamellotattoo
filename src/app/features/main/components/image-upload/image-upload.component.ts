@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
-import { FileUploadEvent, FileUploadHandlerEvent, FileUploadModule } from 'primeng/fileupload';
+import { Component, inject, Input } from '@angular/core';
+import { FileUploadHandlerEvent, FileUploadModule } from 'primeng/fileupload';
 
 import {
   UPLOAD_CONFIG,
   UploadSection
-} from './image-upload.config';
+} from './model/image-upload.config';
+import { ImageService } from './image.service';
 
 @Component({
   selector: 'app-image-upload',
@@ -15,23 +16,38 @@ import {
 })
 export class ImageUploadComponent {
 
+  private readonly imageService = inject(ImageService);
+
   @Input({ required: true })
-  type!: UploadSection;
+  section!: UploadSection;
 
   uploadedFiles: any[] = [];
 
   get config() {
-    return UPLOAD_CONFIG[this.type];
+    return UPLOAD_CONFIG[this.section];
   }
 
-  public onUpload(event: any): void {
-    console.log("chama!");
-    for(let file of event.files) {
-            this.uploadedFiles.push(file);
-        }
-    console.log({
-      type: this.type,
-      files: event
-    });
+  public onUpload(event: FileUploadHandlerEvent): void {
+
+    for (const file of event.files) {
+
+      this.imageService.upload(file, this.section)
+        .subscribe({
+          next: image => {
+
+            this.uploadedFiles.push(image);
+
+            console.log('Imagem enviada:', image);
+          },
+
+          error: error => {
+
+            console.error(
+              'Erro ao enviar imagem:',
+              error
+            );
+          }
+        });
+    }
   }
 }

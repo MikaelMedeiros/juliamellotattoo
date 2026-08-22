@@ -1,4 +1,4 @@
-<p>Que bom ter você por aqui ^^</p>
+<p class="mt-10">Que bom ter você por aqui ^^</p>
 
 <app-site-section-card
     title="Banner"
@@ -9,5 +9,5 @@
   />
 
 <p-drawer [header]="selectedSectionType.label" position="right" [(visible)]="visible" styleClass="!w-full">    
-    <app-image-upload [type]="selectedSectionType.type" />
+    <app-image-upload [section]="selectedSectionType.section" />
 </p-drawer>
