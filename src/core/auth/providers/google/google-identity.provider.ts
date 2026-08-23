@@ -10,14 +10,12 @@ declare const google: any;
 export class GoogleIdentityProvider {
 
   login(): Promise<GoogleUser> {
-console.log(environment.googleClientId);
     return new Promise((resolve, reject) => {
 
       google.accounts.id.initialize({
         client_id: environment.googleClientId,
 
         callback: (response: any) => {
-console.log(response);
           try {
 
             const payload = JSON.parse(
@@ -36,13 +34,7 @@ console.log(response);
           }
 
         }
-      });
-
-      google.accounts.id.prompt((notification: any) => {
-
-        console.log(notification);
-
-      });
+      });      
     });
   }
 }

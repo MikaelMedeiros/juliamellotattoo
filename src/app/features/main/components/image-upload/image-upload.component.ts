@@ -18,8 +18,7 @@ import {
 } from './model/image-upload.config';
 
 import { ImageService } from './image.service';
-
-import { UploadedImage } from './model/uploaded-images.response';
+import { ImageUploadResponse } from './model/image-upload.response';
 
 
 @Component({
@@ -53,7 +52,7 @@ export class ImageUploadComponent implements OnInit {
   /**
    * Imagens atualmente exibidas na galeria.
    */
-  uploadedFiles: any[] = [];
+  uploadedFiles: ImageUploadResponse[] = [];
 
 
   /**
@@ -62,7 +61,7 @@ export class ImageUploadComponent implements OnInit {
    * Essa propriedade pode ser preenchida pelo carregamento
    * inicial da sua API.
    */
-  initialImages: UploadedImage[] = [];
+  initialImages: ImageUploadResponse[] = [];
 
 
   /**
@@ -106,9 +105,10 @@ export class ImageUploadComponent implements OnInit {
      * Mantemos uma cópia para evitar alterar
      * diretamente a referência original.
      */
-    this.uploadedFiles = [
-      ...this.initialImages
-    ];
+    this.imageService.getImages(this.section).subscribe(images => {
+      this.initialImages = images;
+      this.uploadedFiles = [...this.initialImages];
+    });   
 
   }
 
@@ -288,12 +288,7 @@ export class ImageUploadComponent implements OnInit {
               filesToUpload.length
             ) {
               this.isUploading = false;
-            }
-
-            console.log(
-              'Imagem enviada:',
-              image
-            );
+            }      
 
             this.messageService.add({
               severity: 'success',
@@ -354,7 +349,8 @@ export class ImageUploadComponent implements OnInit {
     this.isUploading = true;
 
     this.imageService
-      .upload(
+      .updateImage(
+        currentImage.id,
         file,
         this.section
       )
@@ -374,19 +370,11 @@ export class ImageUploadComponent implements OnInit {
 
           }
 
-
-           //@TODO: Aqui você pode adicionar a lógica para atualizar a referência da imagem no backend, caso necessário. Atualmente, apenas substituímos a referência visual na galeria.
-          /**
-           * Caso o serviço não retorne preview,
-           * criamos um preview local.
-           */
           if (!image.url) {
 
             image.url =
               URL.createObjectURL(file);
-
           }
-
 
           /**
            * Mantém a posição original da imagem.
@@ -399,15 +387,7 @@ export class ImageUploadComponent implements OnInit {
                   : item
             );
 
-
-          this.isUploading = false;
-
-
-          console.log(
-            'Imagem substituída:',
-            image
-          );
-
+          this.isUploading = false;       
 
           this.messageService.add({
             severity: 'success',
@@ -479,60 +459,54 @@ export class ImageUploadComponent implements OnInit {
    * possuir o método correspondente.
    */
   removeImage(index: number): void {
-
-    const image =
-      this.uploadedFiles[index];
-
+    const image = this.uploadedFiles[index];
 
     if (!image) {
       return;
     }
 
+    this.imageService.removeImage(image.id).subscribe({
+      next: () => {
+        if (image.url) {
+          URL.revokeObjectURL(image.url);
+        }
 
-    /**
-     * Libera o ObjectURL caso exista.
-     */
-    if (image.url) {
+        this.uploadedFiles = this.uploadedFiles.filter(
+          item => item.id !== image.id
+        );
 
-      URL.revokeObjectURL(
-        image.url
-      );
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Imagem removida',
+          detail: 'Imagem removida da galeria.'
+        });
+      },
 
-    }
+      error: (error) => {
+        console.error('Erro ao remover imagem:', error);
 
-
-    this.uploadedFiles =
-      this.uploadedFiles.filter(
-        (_, i) =>
-          i !== index
-      );
-
-
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Imagem removida',
-      detail: 'Imagem removida da galeria.'
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Erro ao remover imagem!'
+        });
+      }
     });
-
   }
-
 
   /**
    * Abre o site em uma nova aba.
    */
   openSite(): void {
-
     if (!this.siteUrl) {
       return;
     }
-
 
     window.open(
       this.siteUrl,
       '_blank',
       'noopener,noreferrer'
     );
-
   }
 
 }
