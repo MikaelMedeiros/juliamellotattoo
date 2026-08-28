@@ -9,7 +9,16 @@
 </article>
 
 <div class="card flex items-center justify-center pt-16">
-    <p-galleria [value]="images" [autoPlay]="true" [circular]="true" [showIndicators]="true" [showThumbnails]="false" [changeItemOnIndicatorHover]="true" [showItemNavigators]="true" [containerStyle]="{ 'max-width': '640px' }">
+    <p-galleria [value]="images" 
+        [autoPlay]="true" 
+        [circular]="true" 
+        [showIndicators]="true" 
+        [showThumbnails]="false" 
+        [changeItemOnIndicatorHover]="true" 
+        [showItemNavigators]="true" 
+        [containerStyle]="{ 'max-width': '640px' }"   
+        (click)="trackInteracaoGaleria()"    
+        >
         <ng-template #item let-item>
             <img [src]="item.itemImageSrc" style="width: 100%;" />
         </ng-template>

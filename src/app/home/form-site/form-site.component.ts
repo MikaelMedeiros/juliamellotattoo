@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 
+declare var fbq: any;
+
 @Component({
   selector: 'app-form-site',
   imports: [CommonModule, FormsModule, InputTextModule, InputNumberModule],
@@ -14,6 +16,8 @@ export class FormSiteComponent {
 
   @ViewChild('inputField') inputField!: ElementRef;
   @ViewChild('confirmButton') confirmButton!: ElementRef; 
+
+  private formularioEnviado = false;
 
   questions = [
     { text: 'Qual é o seu nome?', type: 'text', placeholder: 'Digite seu nome...', maxLength: '50' },    
@@ -124,6 +128,7 @@ export class FormSiteComponent {
   }
 
   sendWppMessage() {
+    this.trackEnvioFormulario();
     window.open(this.getWhatsAppLink(), '_blank')    
   }
 
@@ -132,4 +137,10 @@ export class FormSiteComponent {
     const message = `Oi, Jú. Tudo bem? Eu gostaria de um orçamento, seguem meus dados \n ${this.getFormattedResponses()}`;
     return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
   }
+
+  trackEnvioFormulario(): void {
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'Lead');
+    }
+  }  
 }

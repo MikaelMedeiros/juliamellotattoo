@@ -2,6 +2,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { ImageModule } from 'primeng/image';
 import { ButtonModule } from 'primeng/button';
 
+declare var fbq: any;
+
 @Component({
   selector: 'app-banner-site',
   imports: [ImageModule, ButtonModule],
@@ -14,6 +16,8 @@ export class BannerSiteComponent {
   currentSlide = 0;
   totalSlides = 2; // Atualize conforme o número de slides
   slideInterval: any;
+
+  private queroOrcamentoClicado = false; 
 
   ngOnInit() {
     // Inicia o carrossel automático
@@ -34,7 +38,15 @@ export class BannerSiteComponent {
   }
 
   scrollToSection(section: string) {
+    this.trackCliqueOrcamento();
     this.clickScroll.emit(section);
   }
 
+  trackCliqueOrcamento(): void {
+    if (!this.queroOrcamentoClicado) {
+      if (typeof fbq !== 'undefined') {
+        fbq('trackCustom', 'CliqueBotaoQueroOrcamento');
+      }
+    }
+  }  
 }
