@@ -41,12 +41,23 @@
               class="
                 group
                 relative
-                aspect-6/3            
+                aspect-6/3
                 overflow-hidden
                 rounded-2xl
                 border
                 border-[#292f39]
                 bg-[#10141a]
+                transition-all
+                duration-300
+                ease-out
+              "
+
+              [class.animate-delete]="
+                isAnimatingImage(image.id, 'delete')
+              "
+
+              [class.animate-replace]="
+                isAnimatingImage(image.id, 'replace')
               "
             >
 
@@ -76,8 +87,88 @@
                   to-black/70
                 "                
               ></div>
+@if (isAnimatingImage(image.id, 'delete')) {
 
+  <div
+    class="
+      absolute
+      inset-0
+      z-30
+      flex
+      items-center
+      justify-center
+      bg-red-950/60
+      backdrop-blur-sm
+    "
+  >
 
+    <div
+      class="
+        flex
+        h-14
+        w-14
+        items-center
+        justify-center
+        rounded-full
+        border
+        border-red-500/50
+        bg-black/70
+      "
+    >
+      <i
+        class="
+          pi
+          pi-trash
+          text-xl
+          text-red-400
+        "
+      ></i>
+    </div>
+
+  </div>
+
+}
+@if (isAnimatingImage(image.id, 'replace')) {
+
+  <div
+    class="
+      absolute
+      inset-0
+      z-30
+      flex
+      items-center
+      justify-center
+      bg-[#8b5cf6]/10
+      backdrop-blur-[1px]
+    "
+  >
+
+    <div
+      class="
+        flex
+        items-center
+        gap-2
+        rounded-xl
+        border
+        border-[#8b5cf6]/50
+        bg-black/75
+        px-4
+        py-2
+        text-sm
+        font-medium
+        text-[#c4b5fd]
+      "
+    >
+
+      <i class="pi pi-pencil"></i>
+
+      Alterando...
+
+    </div>
+
+  </div>
+
+}
               <!-- Image Number -->
               <div
                 class="

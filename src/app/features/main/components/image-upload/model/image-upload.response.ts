@@ -5,5 +5,6 @@ export interface ImageUploadResponse {
   height: number;
   filename: string;
   contentType: string;
+  position: number;
   size: number;
 }

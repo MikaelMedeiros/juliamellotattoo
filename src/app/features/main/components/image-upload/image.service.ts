@@ -15,15 +15,14 @@ export class ImageService {
   private readonly api = `${environment.apiUrl}/api`;
   private readonly resource = `${this.api}/images`;
 
-    upload(file: File, section: UploadSection): Observable<ImageUploadResponse> {
+    upload(file: File, section: UploadSection, position: number): Observable<ImageUploadResponse> {
 
         const formData = new FormData();
         
-        formData.append('file', file);
-        formData.append('section', section);
+        formData.append('file', file);        
 
         return this.http.post<ImageUploadResponse>(
-            this.resource,
+            `${this.resource}/${section}/${position}`,
             formData
         );
     }
@@ -34,16 +33,17 @@ export class ImageService {
         );
     }
 
-    removeImage(imageId: string): Observable<void> {
+    removeImage(section: UploadSection, position: number): Observable<void> {
         return this.http.delete<void>(
-            `${this.resource}/${imageId}`
+            `${this.resource}/${section}/${position}`
         );
     }
 
-    updateImage(imageId: string, file: File, section: UploadSection): Observable<ImageUploadResponse> {
+    updateImage(imageId: string, file: File, section: UploadSection, position: number): Observable<ImageUploadResponse> {
         const formData = new FormData();
         formData.append('file', file);  
         formData.append('section', section);
+        formData.append('position', `${position}`);
       
         return this.http.put<ImageUploadResponse>(
           `${this.resource}/${imageId}`,

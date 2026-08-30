@@ -36,3 +36,48 @@
 :host ::ng-deep .p-fileupload-content {
   @apply min-h-32;
 }
+
+.animate-delete {
+  animation: image-delete 1000ms ease-out forwards;
+  pointer-events: none;
+}
+
+.animate-replace {
+  animation: image-replace 900ms ease-in-out infinite;
+  border-color: #8b5cf6;
+}
+
+@keyframes image-delete {
+
+  0% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+
+  60% {
+    opacity: 0.5;
+    transform: scale(0.96);
+    filter: blur(2px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.9);
+    filter: blur(6px);
+  }
+
+}
+
+@keyframes image-replace {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.015);
+  }
+
+}

@@ -14,7 +14,7 @@ export class MainComponent {
 
   visible = false;
   selectedSectionType: {section: UploadSection, label: string} = {section: 'banner', label: 'Banner'};
-  bannerImage = 'https://juliamellotattoo.com.br/media/bannerprincipal-ZAXVVQVV.png';
+  bannerImage = 'https://res.cloudinary.com/xlgjkgsg/image/upload/julia-mello/banner.png';
 
   public openBannerEditor() {
     this.visible = true;

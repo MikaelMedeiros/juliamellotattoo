@@ -68,7 +68,7 @@ export class ImageUploadComponent implements OnInit {
    * URL do site que será aberto pelo botão
    * "Ver no site".
    */
-  siteUrl = 'https://mysite.com.br';
+  siteUrl = 'https://juliamellotattoo.com.br';
 
 
   /**
@@ -131,6 +131,19 @@ export class ImageUploadComponent implements OnInit {
 
   }
 
+  isAnimating = false;
+  animatingImageId: string | null = null;
+  animatingAction: 'delete' | 'replace' | null = null;
+
+  isAnimatingImage(
+    imageId: string,
+    action: 'delete' | 'replace'
+  ): boolean {
+    return (
+      this.animatingImageId === imageId &&
+      this.animatingAction === action
+    );
+  }
 
   /**
    * Abre o seletor de arquivos para substituir
@@ -138,20 +151,25 @@ export class ImageUploadComponent implements OnInit {
    */
   openReplaceDialog(index: number): void {
 
-    if (this.isUploading) {
+    if (this.isUploading || this.isAnimating) {
       return;
     }
 
-    if (!this.uploadedFiles[index]) {
+    const image = this.uploadedFiles[index];
+
+    if (!image) {
       return;
     }
+
+    this.animatingImageId = image.id;
+    this.animatingAction = 'replace';
+    this.isAnimating = true;
 
     this.replacingIndex = index;
 
     this.resetFileInput();
 
     this.fileInput.nativeElement.click();
-
   }
 
 
@@ -183,17 +201,12 @@ export class ImageUploadComponent implements OnInit {
     const input = event.target as HTMLInputElement;
 
     if (!input.files || input.files.length === 0) {
+      this.clearAnimation();
       return;
     }
 
-
     const file = input.files[0];
 
-
-    /**
-     * Se replacingIndex possui valor,
-     * estamos substituindo uma imagem.
-     */
     if (this.replacingIndex !== null) {
 
       const index = this.replacingIndex;
@@ -208,12 +221,7 @@ export class ImageUploadComponent implements OnInit {
       return;
     }
 
-
-    /**
-     * Caso contrário, trata como novo upload.
-     */
     this.onUpload([file]);
-
   }
 
 
@@ -262,13 +270,18 @@ export class ImageUploadComponent implements OnInit {
 
     let completed = 0;
 
+    const positions = this.getAvailablePositions( filesToUpload.length );
 
-    for (const file of filesToUpload) {
+
+    filesToUpload.forEach( (file, index) => {
+
+      const position = positions[index];
 
       this.imageService
         .upload(
           file,
-          this.section
+          this.section,
+          position
         )
         .subscribe({
 
@@ -322,7 +335,8 @@ export class ImageUploadComponent implements OnInit {
           }
         });
 
-    }
+      }
+    );
 
   }
 
@@ -341,6 +355,7 @@ export class ImageUploadComponent implements OnInit {
 
     const currentImage =
       this.uploadedFiles[index];
+    const position = index + 1;
 
     if (!currentImage) {
       return;
@@ -349,36 +364,23 @@ export class ImageUploadComponent implements OnInit {
     this.isUploading = true;
 
     this.imageService
-      .updateImage(
-        currentImage.id,
+      .upload(        
         file,
-        this.section
+        this.section,
+        position
       )
       .subscribe({
 
         next: image => {
 
-          /**
-           * Revoga o preview antigo para evitar
-           * vazamento de memória.
-           */
           if (currentImage.url) {
-
-            URL.revokeObjectURL(
-              currentImage.url
-            );
-
+            URL.revokeObjectURL(currentImage.url);
           }
 
           if (!image.url) {
-
-            image.url =
-              URL.createObjectURL(file);
+            image.url = URL.createObjectURL(file);
           }
 
-          /**
-           * Mantém a posição original da imagem.
-           */
           this.uploadedFiles =
             this.uploadedFiles.map(
               (item, itemIndex) =>
@@ -387,7 +389,9 @@ export class ImageUploadComponent implements OnInit {
                   : item
             );
 
-          this.isUploading = false;       
+          this.isUploading = false;
+
+          this.clearAnimation();
 
           this.messageService.add({
             severity: 'success',
@@ -397,28 +401,30 @@ export class ImageUploadComponent implements OnInit {
 
         },
 
-
         error: error => {
-
           this.isUploading = false;
-
+          this.clearAnimation();
 
           console.error(
             'Erro ao substituir imagem:',
             error
           );
 
-
           this.messageService.add({
             severity: 'error',
             summary: 'Erro',
             detail: 'Erro ao substituir imagem!'
           });
-
         }
 
       });
 
+  }
+
+  private clearAnimation(): void {
+    this.animatingImageId = null;
+    this.animatingAction = null;
+    this.isAnimating = false;
   }
 
 
@@ -459,39 +465,85 @@ export class ImageUploadComponent implements OnInit {
    * possuir o método correspondente.
    */
   removeImage(index: number): void {
+
+    if (this.isUploading || this.isAnimating) {
+      return;
+    }
+
     const image = this.uploadedFiles[index];
+    const position = image.position;
 
     if (!image) {
       return;
     }
 
-    this.imageService.removeImage(image.id).subscribe({
-      next: () => {
-        if (image.url) {
-          URL.revokeObjectURL(image.url);
+    this.animatingImageId = image.id;
+    this.animatingAction = 'delete';
+    this.isAnimating = true;
+
+    this.imageService
+      .removeImage(this.section, position)
+      .subscribe({
+
+        next: () => {
+
+          if (image.url) {
+            URL.revokeObjectURL(image.url);
+          }
+
+          this.uploadedFiles =
+            this.uploadedFiles.filter(
+              item => item.id !== image.id
+            );
+
+          this.clearAnimation();
+
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Imagem removida',
+            detail: 'Imagem removida da seção.'
+          });
+        },
+
+        error: error => {
+
+          this.clearAnimation();
+
+          console.error(
+            'Erro ao remover imagem:',
+            error
+          );
+
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Erro ao remover imagem!'
+          });
         }
 
-        this.uploadedFiles = this.uploadedFiles.filter(
-          item => item.id !== image.id
-        );
+      });
+  }
 
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Imagem removida',
-          detail: 'Imagem removida da galeria.'
-        });
-      },
+  private getAvailablePositions(quantity: number): number[] {
+    const usedPositions = new Set(
+      this.uploadedFiles.map(image => image.position)
+    );
 
-      error: (error) => {
-        console.error('Erro ao remover imagem:', error);
+    const positions: number[] = [];
 
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Erro',
-          detail: 'Erro ao remover imagem!'
-        });
+    let position = 1;
+
+    while (positions.length < quantity) {
+
+      if (!usedPositions.has(position)) {
+        positions.push(position);
+        usedPositions.add(position);
       }
-    });
+
+      position++;
+    }
+
+    return positions;
   }
 
   /**
