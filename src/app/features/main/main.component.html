@@ -1,13 +1,24 @@
 <p class="mt-10">Que bom ter você por aqui ^^</p>
 
-<app-site-section-card
-    title="Banner"
-    description="Imagem principal do topo do seu site"
-    icon="pi-image"
-    [image]="bannerImage"
-    (selected)="openBannerEditor()"
+@for (section of sections; track section.section) {
+  <app-site-section-card
+    [title]="section.label"
+    [description]="section.description"
+    [icon]="section.icon"
+    [image]="section.image"
+    (selected)="openEditor(section.section, section.label)"
   />
+}
 
-<p-drawer [header]="selectedSectionType.label" position="right" [(visible)]="visible" styleClass="!w-full">    
-    <app-image-upload [section]="selectedSectionType.section" />
+<p-drawer
+  [header]="selectedSectionType.label"
+  position="right"
+  [(visible)]="visible"
+  styleClass="!w-full"
+>
+  @if (visible) {
+    <app-image-upload
+      [section]="selectedSectionType.section"
+    />
+  }
 </p-drawer>

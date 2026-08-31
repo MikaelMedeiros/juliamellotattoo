@@ -3,7 +3,7 @@
 .card {
   @apply relative block h-56 w-full overflow-hidden
          rounded-xl border border-white/10
-         bg-zinc-900 text-left;
+         bg-zinc-900 text-left mt-7;
 }
 
 .background {

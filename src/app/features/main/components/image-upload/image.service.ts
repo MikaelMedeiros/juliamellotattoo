@@ -28,6 +28,7 @@ export class ImageService {
     }
 
     getImages(section: UploadSection): Observable<ImageUploadResponse[]> {
+        console.log('Section: ', section)
         return this.http.get<ImageUploadResponse[]>(
             `${this.resource}/${section}`
         );

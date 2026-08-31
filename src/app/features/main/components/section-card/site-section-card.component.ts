@@ -22,7 +22,7 @@ export class SiteSectionCard {
   @Output()
   selected = new EventEmitter<void>();
 
-  onClick(): void {
+  onClick(): void {    
     this.selected.emit();
   }
 }
