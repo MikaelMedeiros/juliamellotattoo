@@ -20,6 +20,12 @@ export class LoginComponent {
     private readonly route: ActivatedRoute
   ) {}
 
+   ngOnInit(): void {
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/admin']);
+    }
+  }
+
   async login(): Promise<void> {
 
     try {
