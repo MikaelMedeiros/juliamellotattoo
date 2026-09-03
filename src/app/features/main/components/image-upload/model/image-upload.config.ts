@@ -48,7 +48,7 @@ export const UPLOAD_CONFIG: Record<UploadSection, UploadConfig> = {
     description: 'Feedback de seus clientes',
     recommendedSize: '1200 × 800px',
     maxFileSize: 3_000_000,
-    maxFiles: 3,
+    maxFiles: 12,
     icon: 'pi-users'
   },
 

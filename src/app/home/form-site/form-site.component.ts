@@ -19,6 +19,8 @@ export class FormSiteComponent {
 
   private formularioEnviado = false;
 
+  urlImageAvatarChat = 'https://res.cloudinary.com/xlgjkgsg/image/upload/julia-mello-tattoo/avatar-chat/slot-01.png';
+
   questions = [
     { text: 'Qual é o seu nome?', type: 'text', placeholder: 'Digite seu nome...', maxLength: '50' },    
     { text: 'agora me conte um pouco sobre sua ideia de tatuagem', type: 'text', placeholder: 'Digite sua ideia de tattoo...', maxLength: '100' },
@@ -33,6 +35,18 @@ export class FormSiteComponent {
 
   constructor(private el: ElementRef) {
     this.askNextQuestion();
+  }
+
+  private readonly defaultAvatar = 'assets/images/orc-tatuadora.png';
+
+  onImageError(event: Event): void {
+    const img = event.target as HTMLImageElement;
+
+    if (img.src.endsWith(this.defaultAvatar)) {
+      return;
+    }
+
+    img.src = this.defaultAvatar;
   }
 
   scrollIntoView() {

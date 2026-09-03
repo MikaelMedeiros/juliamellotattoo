@@ -19,6 +19,7 @@ import {
 
 import { ImageService } from './image.service';
 import { ImageUploadResponse } from './model/image-upload.response';
+import { SkeletonModule } from 'primeng/skeleton';
 
 
 @Component({
@@ -27,7 +28,8 @@ import { ImageUploadResponse } from './model/image-upload.response';
 
   imports: [
     CommonModule,
-    ButtonModule
+    ButtonModule,
+    SkeletonModule
   ],
 
   templateUrl: './image-upload.component.html',
@@ -40,6 +42,7 @@ export class ImageUploadComponent implements OnInit {
 
   private readonly messageService = inject(MessageService);
 
+  isLoading = true;
 
   @ViewChild('fileInput')
   fileInput!: ElementRef<HTMLInputElement>;
@@ -188,7 +191,7 @@ export class ImageUploadComponent implements OnInit {
   }
 
 
-  /**
+    /**
    * Evento do input nativo de arquivos.
    *
    * O mesmo input é utilizado tanto para:
@@ -207,6 +210,12 @@ export class ImageUploadComponent implements OnInit {
 
     const file = input.files[0];
 
+    if (!this.validateImageType(file)) {
+      input.value = '';
+      this.clearAnimation();
+      return;
+    }
+
     if (this.replacingIndex !== null) {
 
       const index = this.replacingIndex;
@@ -224,6 +233,20 @@ export class ImageUploadComponent implements OnInit {
     this.onUpload([file]);
   }
 
+
+  private validateImageType(file: File): boolean {
+    if (file.type !== 'image/png') {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Formato inválido',
+        detail: 'Apenas imagens PNG são permitidas.'
+      });
+
+      return false;
+    }
+
+    return true;
+  }
 
   /**
    * Faz upload de novas imagens.

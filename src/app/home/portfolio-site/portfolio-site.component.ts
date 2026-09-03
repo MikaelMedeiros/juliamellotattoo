@@ -1,33 +1,68 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+
 import { GalleriaModule } from 'primeng/galleria';
-import { PhotoService } from './shared/photo.service';
+
+import {
+  PortfolioImage,
+  PhotoService
+} from './shared/photo.service';
 
 declare var fbq: any;
 
 @Component({
   selector: 'app-portfolio-site',
-  imports: [GalleriaModule],
+  imports: [
+    GalleriaModule
+  ],
   templateUrl: './portfolio-site.component.html',
-  styleUrl: './portfolio-site.component.css',
-  providers: [PhotoService]
+  styleUrl: './portfolio-site.component.css'
 })
-export class PortfolioSiteComponent implements OnInit {
-    images: { itemImageSrc: string; thumbnailImageSrc: string; alt: string; title: string; }[] = []
+export class PortfolioSiteComponent
+  implements OnInit {
 
-    private galeriaInteragida = false;
+  images: PortfolioImage[] = [];
 
-    constructor(private photoService: PhotoService) {}
+  private galeriaInteragida = false;
 
-    ngOnInit() {
-        this.photoService.getImages().then((images) => this.images = images);
-    }
+  constructor(
+    private readonly imageService:
+    PhotoService
+  ) {}
 
-    trackInteracaoGaleria(): void {    
-        if (!this.galeriaInteragida) {
-            if (typeof fbq !== 'undefined') {
-                fbq('trackCustom', 'InteracaoGaleria');
-            }
-            this.galeriaInteragida = true;
+
+  ngOnInit(): void {
+
+    this.imageService
+      .getImages()
+      .subscribe(
+        images => {
+          this.images = images;
         }
+      );
+
+  }
+
+
+  trackInteracaoGaleria(): void {
+
+    if (
+      !this.galeriaInteragida
+    ) {
+
+      if (
+        typeof fbq !== 'undefined'
+      ) {
+
+        fbq(
+          'trackCustom',
+          'InteracaoGaleria'
+        );
+      }
+
+      this.galeriaInteragida = true;
     }
+  }
 }

@@ -112,12 +112,21 @@ export class QuoteComponent implements OnInit {
 
   setEnumDisconected() {    
     this.styles = [
-      { name: 'Fineline', value: 'FINELINE', ptbr: 'fineline' },
-      { name: 'Bold Line', value: 'BOLD_LINE', ptbr: 'bold line' },
+      { name: 'Autoral', value: 'AUTHORAL', ptbr: 'autoral' },
+      { name: 'Minirealismo', value: 'MINIREALISM', ptbr: 'minirealismo' }, 
+      { name: 'Aquarela', value: 'WATERCOLOR', ptbr: 'aquarela' },
+      { name: 'Abstrato', value: 'ABSTRACT', ptbr: 'abstrato' },
+      { name: 'Trash Polka', value: 'TRASH_POLKA', ptbr: 'trash polka' },
+      { name: 'Concept', value: 'CONCEPT', ptbr: 'concept' },     
       { name: 'Realismo', value: 'REALISM', ptbr: 'realismo' },
+      { name: 'Hiper Realismo', value: 'HYPER_REALISM', ptbr: 'hiper realismo' },
+      { name: 'Portrait', value: 'PORTRAIT', ptbr: 'portrait' },
       { name: 'Old School', value: 'OLD_SCHOOL', ptbr: 'old school' },
       { name: 'Black Work', value: 'BLACK_WORK', ptbr: 'black work' },
       { name: 'Minimalista', value: 'MINIMALIST', ptbr: 'minimalista' },
+      { name: 'Oriental', value: 'ORIENTAL', ptbr: 'oriental' },
+      { name: 'Tribal', value: 'TRIBAL', ptbr: 'tribal' },
+      { name: 'Ornamental', value: 'ORNAMENTAL', ptbr: 'ornamental' },
       { name: 'Geek', value: 'GEEK', ptbr: 'geek' },
       { name: 'Free Hand', value: 'FREE_HAND', ptbr: 'free hand' },
       { name: 'Caligrafia', value: 'CALLIGRAPHY', ptbr: 'caligrafia' },
@@ -125,8 +134,11 @@ export class QuoteComponent implements OnInit {
       { name: 'Neotradicional', value: 'NEOTRADITIONAL', ptbr: 'neotradicional' },
       { name: 'Tribal', value: 'TRIBAL', ptbr: 'tribal' },
     ];
-
+    
     this.details = [
+      { name: 'Whipshading', value: 'WHIPSHADING', ptbr: 'whipshading' },
+      { name: 'Fineline', value: 'FINELINE', ptbr: 'fineline' },      
+      { name: 'Bold Line', value: 'BOLD_LINE', ptbr: 'bold line' },
       { name: 'Sombreamento', value: 'SHADING', ptbr: 'sombreamento' },
       { name: 'Pontilhismo', value: 'POINTILLISM', ptbr: 'pontilhismo'  },
       { name: 'Linhas', value: 'LINES', ptbr: 'linhas' },
@@ -135,6 +147,17 @@ export class QuoteComponent implements OnInit {
     ];
 
     this.bodyLocal = [
+      { name: 'Tríceps', value:'TRICEPS', ptbr: 'tríceps', addtion: '2'},
+      { name: 'Bíceps', value:'BICEPS', ptbr: 'bíceps', addtion: '2'},
+      { name: 'Coxa', value:'THIGH', ptbr: 'coxa', addtion: '2'},
+      { name: 'Coluna', value:'SPINE', ptbr: 'coluna', addtion: '2'},
+      { name: 'Lombar', value:'LOMBAR', ptbr: 'lombar', addtion: '2'},
+      { name: 'Pulso', value:'WRIST', ptbr: 'pulso', addtion: '2'},
+      { name: 'Clavícula', value:'CLAVICLE', ptbr: 'clavícula', addtion: '2'},
+      { name: 'Nuca', value:'NUCKLE', ptbr: 'nuca', addtion: '2'},
+      { name: 'Calcanhar', value:'HEEL', ptbr: 'calcanhar', addtion: '2'},
+      { name: 'Dorsal', value:'DORSAL', ptbr: 'dorsal', addtion: '2'},
+      { name: 'Glúteo', value:'GLUTEUS', ptbr: 'glúteo', addtion: '2'},            
       { name: 'Orelha', value:'EAR', ptbr: 'orelha', addtion: '2'},
       { name: 'Pescoço', value:'NECK', ptbr: 'pescoço', addtion: '2'},
       { name: 'Ombro', value:'SHOULDER', ptbr: 'ombro', addtion: '2'},
@@ -168,13 +191,13 @@ export class QuoteComponent implements OnInit {
     })
 
     this.configForm = this.fb.group({
-      valorcm: [35, Validators.required],
+      valorcm: [42, Validators.required],
       percentageTax: [30],
       parkingPrice: [80],
-      creditTax: [60],
+      creditTax: [150],
       materials: [80],
       maxInstallments: [3],
-      validity: [30]
+      validity: [45]
     })
 
     this.additionPriceForm = this.fb.group({
@@ -189,6 +212,8 @@ export class QuoteComponent implements OnInit {
       colorido: [0],
       tintaBranca: [0],
       fineline: [],
+      whipshading: [],
+
       boldline: [0],
       realismo: [0],
       oldschool: [0],

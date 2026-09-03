@@ -4,10 +4,11 @@ import {
   ElementRef,
   ViewChild,
 } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs';
+
 import { SocialProofService } from './social-proof.service';
 import { SocialProofImage } from './social-proof.model';
-import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-social-proof',
@@ -28,7 +29,9 @@ export class SocialProofComponent {
   @ViewChild('carousel', { static: false })
   carouselRef!: ElementRef<HTMLDivElement>;
 
-  constructor(private socialProofService: SocialProofService) {
+  constructor(
+    private socialProofService: SocialProofService
+  ) {
     this.images$ = this.socialProofService.getImages();
   }
 
