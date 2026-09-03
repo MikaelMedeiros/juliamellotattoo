@@ -234,12 +234,38 @@ export class ImageUploadComponent implements OnInit {
   }
 
 
+  
   private validateImageType(file: File): boolean {
-    if (file.type !== 'image/png') {
+    const allowedTypes = [
+      'image/jpeg',
+      'image/png',
+      'image/webp',
+      'image/heic',
+      'image/heif'
+    ];
+
+    const allowedExtensions = [
+      '.jpg',
+      '.jpeg',
+      '.png',
+      '.webp',
+      '.heic',
+      '.heif'
+    ];
+
+    const extension = file.name
+      .substring(file.name.lastIndexOf('.'))
+      .toLowerCase();
+
+    const isValid =
+      allowedTypes.includes(file.type) ||
+      allowedExtensions.includes(extension);
+
+    if (!isValid) {
       this.messageService.add({
         severity: 'error',
         summary: 'Formato inválido',
-        detail: 'Apenas imagens PNG são permitidas.'
+        detail: 'Apenas imagens JPG, PNG, WebP ou HEIC são permitidas.'
       });
 
       return false;
@@ -247,6 +273,8 @@ export class ImageUploadComponent implements OnInit {
 
     return true;
   }
+
+
 
   /**
    * Faz upload de novas imagens.
