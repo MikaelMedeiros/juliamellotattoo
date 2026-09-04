@@ -21,7 +21,7 @@ export const UPLOAD_CONFIG: Record<UploadSection, UploadConfig> = {
     description: 'Imagem principal do site, exibida no topo da página inicial.',
     recommendedSize: '1920 × 600px',
     maxFileSize: 5_000_000,
-    maxFiles: 1,
+    maxFiles: 5,
     icon: 'pi-image'
   },
 

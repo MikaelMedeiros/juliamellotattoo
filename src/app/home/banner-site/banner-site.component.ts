@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { ImageModule } from 'primeng/image';
 import { ButtonModule } from 'primeng/button';
+import { Banner } from './model/banner.model';
+import { BannerImageService } from './banner.service';
 
 declare var fbq: any;
 
@@ -13,29 +15,68 @@ declare var fbq: any;
 export class BannerSiteComponent {
   @Output() clickScroll = new EventEmitter<string>();
 
+  private defaultTitle = 'Artes minimalistas e sofisticadas, criadas para valorizar seu corpo e destacar sua essência.';
+  private defaultButtonLabel = 'Quero um orçamento';
+  private defaultButtonSection = 'formSite';
+
+  private readonly banners: Banner[] = [
+  {
+    image: 'https://res.cloudinary.com/xlgjkgsg/image/upload/julia-mello-tattoo/banner'
+  },
+  {
+    image: 'https://res.cloudinary.com/xlgjkgsg/image/upload/julia-mello-tattoo/banner/slot-01'
+  },
+  {
+    image: 'https://res.cloudinary.com/xlgjkgsg/image/upload/julia-mello-tattoo/banner/slot-02'
+  },
+  {
+    image: 'https://res.cloudinary.com/xlgjkgsg/image/upload/julia-mello-tattoo/banner/slot-03'
+  }
+];
+
+  availableBanners: Banner[] = [];
+
   currentSlide = 0;
-  totalSlides = 2; // Atualize conforme o número de slides
-  slideInterval: any;
 
-  private queroOrcamentoClicado = false; 
+  private slideInterval?: ReturnType<typeof setInterval>;
 
-  ngOnInit() {
-    // Inicia o carrossel automático
-    this.slideInterval = setInterval(() => {
-      this.nextSlide();
-    }, 5000); // Troca de slide a cada 5 segundos
+  private bannerImageService = inject(BannerImageService);
+
+  ngOnInit(): void {
+    this.bannerImageService
+    .filterExistingImages(
+      this.banners,
+      this.defaultTitle,
+      this.defaultButtonLabel,
+      this.defaultButtonSection
+    )
+    .subscribe(banners => {
+      this.availableBanners = banners;
+
+      if (this.availableBanners.length > 1) {
+        this.startCarousel();
+      }
+    });
   }
 
-  ngOnDestroy() {
-    // Limpa o intervalo ao destruir o componente
+  private startCarousel(): void {
+    this.slideInterval = setInterval(() => {
+      this.nextSlide();
+    }, 8000);
+  }
+
+  ngOnDestroy(): void {
     if (this.slideInterval) {
       clearInterval(this.slideInterval);
     }
   }
 
-  nextSlide() {
-    this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
+  nextSlide(): void {
+    this.currentSlide =
+      (this.currentSlide + 1) % this.banners.length;
   }
+
+  private queroOrcamentoClicado = false; 
 
   scrollToSection(section: string) {
     this.trackCliqueOrcamento();

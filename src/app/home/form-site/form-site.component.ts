@@ -19,7 +19,7 @@ export class FormSiteComponent {
 
   private formularioEnviado = false;
 
-  urlImageAvatarChat = 'https://res.cloudinary.com/xlgjkgsg/image/upload/julia-mello-tattoo/avatar-chat/slot-01';
+  urlImageAvatarChat = 'https://res.cloudinary.com/xlgjkgsg/image/upload/julia-mello-tattoo/avatar-chat';
 
   questions = [
     { text: 'Qual é o seu nome?', type: 'text', placeholder: 'Digite seu nome...', maxLength: '50' },    

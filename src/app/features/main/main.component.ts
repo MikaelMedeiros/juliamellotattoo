@@ -39,7 +39,7 @@ export class MainComponent {
     const images: Partial<Record<UploadSection, string>> = {
       banner: 'https://res.cloudinary.com/xlgjkgsg/image/upload/julia-mello-tattoo/banner',
       bio: 'https://res.cloudinary.com/xlgjkgsg/image/upload/julia-mello-tattoo/bio/slot-01',
-      'avatar-chat': 'https://res.cloudinary.com/xlgjkgsg/image/upload/julia-mello-tattoo/avatar-chat/slot-01',
+      'avatar-chat': 'https://res.cloudinary.com/xlgjkgsg/image/upload/julia-mello-tattoo/avatar-chat',
       'social-proof': 'https://res.cloudinary.com/xlgjkgsg/image/upload/julia-mello-tattoo/social-proof/slot-02',
       portfolio: 'https://res.cloudinary.com/xlgjkgsg/image/upload/julia-mello-tattoo/portfolio/slot-01'
     };

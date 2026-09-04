@@ -1,13 +1,25 @@
-<div class="carousel-container">
-    <div class="carousel">
-        <!-- Slide 1 -->
-        <div class="banner-bg align-items-banner">
-            <div>
-                <h1 class="banner-text">Artes minimalistas e sofisticadas, criadas para valorizar seu corpo e destacar sua essência.</h1>
-            </div>
-            <div class="pb-8 pt-10">
-                <p-button [raised]="true" label="Quero um orçamento" severity="success" (onClick)="scrollToSection('formSite')" />
-            </div>
-        </div>
-    </div>
+<div
+  class="banner"
+  [style.background-image]="'url(' + availableBanners[currentSlide].image + ')'"
+>
+  <div class="banner-content">
+
+    @if (availableBanners[currentSlide].title) {
+      <h1 class="banner-text">
+        {{ availableBanners[currentSlide].title }}
+      </h1>
+    }
+
+    @if (availableBanners[currentSlide].buttonLabel) {
+      <div class="pb-8 pt-10">
+        <p-button
+          [raised]="true"
+          [label]="availableBanners[currentSlide].buttonLabel!"
+          severity="success"
+          (onClick)="scrollToSection(availableBanners[currentSlide].buttonSection!)"
+        />
+      </div>
+    }
+
+  </div>
 </div>
