@@ -1,25 +1,27 @@
-<div
-  class="banner"
-  [style.background-image]="'url(' + availableBanners[currentSlide].image + ')'"
->
-  <div class="banner-content">
+@if (availableBanners.length > 0) {
+  <div
+    class="banner"
+    [style.background-image]="'url(' + availableBanners[currentSlide].image + ')'"
+  >
+    <div class="banner-content">
 
-    @if (availableBanners[currentSlide].title) {
-      <h1 class="banner-text">
-        {{ availableBanners[currentSlide].title }}
-      </h1>
-    }
+      @if (availableBanners[currentSlide].title) {
+        <h1 class="banner-text">
+          {{ availableBanners[currentSlide].title }}
+        </h1>
+      }
 
-    @if (availableBanners[currentSlide].buttonLabel) {
-      <div class="pb-8 pt-10">
-        <p-button
-          [raised]="true"
-          [label]="availableBanners[currentSlide].buttonLabel!"
-          severity="success"
-          (onClick)="scrollToSection(availableBanners[currentSlide].buttonSection!)"
-        />
-      </div>
-    }
+      @if (availableBanners[currentSlide].buttonLabel) {
+        <div class="pb-8 pt-10">
+          <p-button
+            [raised]="true"
+            [label]="availableBanners[currentSlide].buttonLabel!"
+            severity="success"
+            (onClick)="scrollToSection(availableBanners[currentSlide].buttonSection!)"
+          />
+        </div>
+      }
 
+    </div>
   </div>
-</div>
+}

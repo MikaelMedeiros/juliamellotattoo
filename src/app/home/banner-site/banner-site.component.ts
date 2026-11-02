@@ -21,16 +21,16 @@ export class BannerSiteComponent {
 
   private readonly banners: Banner[] = [
   {
-    image: 'https://res.cloudinary.com/xlgjkgsg/image/upload/julia-mello-tattoo/banner'
+    image: 'julia-mello-tattoo/banner'
   },
   {
-    image: 'https://res.cloudinary.com/xlgjkgsg/image/upload/julia-mello-tattoo/banner/slot-01'
+    image: 'julia-mello-tattoo/banner/slot-01'
   },
   {
-    image: 'https://res.cloudinary.com/xlgjkgsg/image/upload/julia-mello-tattoo/banner/slot-02'
+    image: 'julia-mello-tattoo/banner/slot-02'
   },
   {
-    image: 'https://res.cloudinary.com/xlgjkgsg/image/upload/julia-mello-tattoo/banner/slot-03'
+    image: 'julia-mello-tattoo/banner/slot-03'
   }
 ];
 
@@ -72,8 +72,10 @@ export class BannerSiteComponent {
   }
 
   nextSlide(): void {
-    this.currentSlide =
-      (this.currentSlide + 1) % this.banners.length;
+    if (this.availableBanners.length > 1) {
+      this.currentSlide =
+        (this.currentSlide + 1) % this.availableBanners.length;
+    }
   }
 
   private queroOrcamentoClicado = false; 

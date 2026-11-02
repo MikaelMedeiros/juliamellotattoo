@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, of, forkJoin } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable, forkJoin } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ImageExtensionService } from '../../shared/image-extension.service';
 import { Banner } from './model/banner.model';
 
 @Injectable({
@@ -9,14 +9,9 @@ import { Banner } from './model/banner.model';
 })
 export class BannerImageService {
 
-  constructor(private http: HttpClient) {}
-
-  imageExists(url: string): Observable<boolean> {
-    return this.http.head(url, { observe: 'response' }).pipe(
-      map(response => response.ok),
-      catchError(() => of(false))
-    );
-  }
+  constructor(
+    private readonly imageExtensionService: ImageExtensionService
+  ) {}
 
   filterExistingImages(
     banners: Banner[],
@@ -26,26 +21,30 @@ export class BannerImageService {
     ): Observable<Banner[]> {
 
     return forkJoin(
-        banners.map(banner =>
-        this.imageExists(banner.image).pipe(
-            map(exists => ({
+      banners.map(banner =>
+        this.imageExtensionService.findImageUrl(banner.image).pipe(
+          map(image => ({
             banner,
-            exists
-            }))
+            image
+          }))
         )
-        )
+      )
     ).pipe(
-        map(results =>
+      map(results =>
         results
-            .filter(result => result.exists)
-            .map(result => ({
+          .filter(
+            (result): result is typeof result & { image: string } =>
+              result.image !== null
+          )
+          .map(result => ({
             ...result.banner,
+            image: result.image,
             title: result.banner.title ?? defaultTitle,
             buttonLabel: result.banner.buttonLabel ?? defaultButtonLabel,
             buttonSection:
-                result.banner.buttonSection ?? defaultButtonSection
-            }))
-        )
+              result.banner.buttonSection ?? defaultButtonSection
+          }))
+      )
     );
-    }
+  }
 }

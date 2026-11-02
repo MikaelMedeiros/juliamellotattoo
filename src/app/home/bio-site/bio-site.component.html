@@ -9,11 +9,13 @@
 
     <!-- Elemento gráfico: IMAGEM -->
     <div class="flex-shrink-0">
-        <img
-        [src]="urlImageBio"
-        alt="Biografia da tatuadora"
-        class="w-52 h-72 object-cover organic-shape"
-        />
+        @if (urlImageBio) {
+            <img
+            [src]="urlImageBio"
+            alt="Biografia da tatuadora"
+            class="w-52 h-72 object-cover organic-shape"
+            />
+        }
     </div>
 
     <!-- Texto -->
@@ -27,4 +29,3 @@
 
     </section>  
 </article>
-

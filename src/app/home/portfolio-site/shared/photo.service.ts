@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, forkJoin, map, of } from 'rxjs';
+import { forkJoin, map } from 'rxjs';
+import { ImageExtensionService } from '../../../shared/image-extension.service';
 
 export interface PortfolioImage {
   itemImageSrc: string;
@@ -14,10 +14,8 @@ export interface PortfolioImage {
 })
 export class PhotoService {
 
-  private readonly http = inject(HttpClient);
-
-  private readonly cloudinaryBaseUrl =
-    'https://res.cloudinary.com/xlgjkgsg/image/upload';
+  private readonly imageExtensionService =
+    inject(ImageExtensionService);
 
   private readonly siteSlug =
     'julia-mello-tattoo';
@@ -40,26 +38,14 @@ export class PhotoService {
         const slot =
           String(position).padStart(2, '0');
 
-        const url =
-          `${this.cloudinaryBaseUrl}/` +
-          `${this.siteSlug}/` +
+        const path =
+          `/${this.siteSlug}/` +
           `${this.section}/` +
           `slot-${slot}`;
 
-        return this.http
-          .head(url, {
-            observe: 'response'
-          })
-          .pipe(
-            map(() => this.createImage(
-              url,
-              position
-            )),
-
-            // 404, erro de rede etc.
-            // simplesmente significa que o slot está vazio.
-            catchError(() => of(null))
-          );
+        return this.imageExtensionService.findImageUrl(path).pipe(
+          map(url => url ? this.createImage(url, position) : null)
+        );
       }
     );
 

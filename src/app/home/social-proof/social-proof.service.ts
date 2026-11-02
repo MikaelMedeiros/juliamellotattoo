@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable, forkJoin, map, of } from 'rxjs';
+import {
+  Observable,
+  forkJoin,
+  map
+} from 'rxjs';
+import { ImageExtensionService } from '../../shared/image-extension.service';
 import { SocialProofImage } from './social-proof.model';
 
 @Injectable({
@@ -7,12 +12,13 @@ import { SocialProofImage } from './social-proof.model';
 })
 export class SocialProofService {
 
-  private readonly cloudinaryBaseUrl =
-    'https://res.cloudinary.com/xlgjkgsg/image/upload';
-
   private readonly siteSlug = 'julia-mello-tattoo';
   private readonly section = 'social-proof';
   private readonly maxSlots = 12;
+
+  constructor(
+    private readonly imageExtensionService: ImageExtensionService
+  ) {}
 
   getImages(): Observable<SocialProofImage[]> {
     const requests: Observable<SocialProofImage | null>[] =
@@ -22,23 +28,20 @@ export class SocialProofService {
           const position = index + 1;
           const slot = String(position).padStart(2, '0');
 
-          const src =
-            `${this.cloudinaryBaseUrl}/` +
-            `${this.siteSlug}/` +
+          const path =
+            `/${this.siteSlug}/` +
             `${this.section}/` +
             `slot-${slot}`;
 
-          return this.checkImage(src).pipe(
-            map((exists): SocialProofImage | null => {
-              if (!exists) {
-                return null;
-              }
-
-              return {
-                src,
-                alt: `Depoimento de cliente ${position}`
-              };
-            })
+          return this.imageExtensionService.findImageUrl(path).pipe(
+            map((src): SocialProofImage | null =>
+              src
+                ? {
+                    src,
+                    alt: `Depoimento de cliente ${position}`
+                  }
+                : null
+            )
           );
         }
       );
@@ -51,23 +54,5 @@ export class SocialProofService {
           )
       )
     );
-  }
-
-  private checkImage(url: string): Observable<boolean> {
-    return new Observable<boolean>(observer => {
-      const image = new Image();
-
-      image.onload = () => {
-        observer.next(true);
-        observer.complete();
-      };
-
-      image.onerror = () => {
-        observer.next(false);
-        observer.complete();
-      };
-
-      image.src = url;
-    });
   }
 }

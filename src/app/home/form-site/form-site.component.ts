@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { ImageExtensionService } from '../../shared/image-extension.service';
 
 declare var fbq: any;
 
@@ -19,7 +20,9 @@ export class FormSiteComponent {
 
   private formularioEnviado = false;
 
-  urlImageAvatarChat = 'https://res.cloudinary.com/xlgjkgsg/image/upload/julia-mello-tattoo/avatar-chat';
+  private readonly defaultAvatar = '/assets/images/orc-tatuadora.png';
+
+  urlImageAvatarChat = this.defaultAvatar;
 
   questions = [
     { text: 'Qual é o seu nome?', type: 'text', placeholder: 'Digite seu nome...', maxLength: '50' },    
@@ -33,11 +36,22 @@ export class FormSiteComponent {
   currentAnswer:any;
   isTyping = false;
 
-  constructor(private el: ElementRef) {
+  constructor(
+    private el: ElementRef,
+    private readonly imageExtensionService: ImageExtensionService
+  ) {
     this.askNextQuestion();
   }
 
-  private readonly defaultAvatar = 'assets/images/orc-tatuadora.png';
+  ngOnInit(): void {
+    this.imageExtensionService
+      .findImageUrl('/julia-mello-tattoo/avatar-chat')
+      .subscribe(url => {
+        if (url) {
+          this.urlImageAvatarChat = url;
+        }
+      });
+  }
 
   onImageError(event: Event): void {
     const img = event.target as HTMLImageElement;
